@@ -1,8 +1,8 @@
-<?php include "includes/header.php";?>
+<?php include "includes/admin_header.php";?>
 
     <div id="wrapper">
 
-        <?php include "includes/navigation.php";?>
+        <?php include "includes/admin_navigation.php";?>
 
         <div id="page-wrapper">
 
@@ -36,10 +36,18 @@
 										</tr>
 									</thead>
 									<tbody>
-										<tr>
-											<td>A Category</td>
-											<td>B Category</td>
-										</tr>
+									<?php
+										$query = "SELECT * FROM categories LIMIT 3";
+										$select_categories = mysqli_query($connect, $query);
+
+										while($row = mysqli_fetch_assoc($select_categories)) {
+											$cat_id = $row['cat_id'];
+											$cat_title = $row['cat_title']; 
+
+											echo "<tr><th>{$cat_id}</th>";
+											echo "<th>{$cat_title}</th></tr>";
+										}
+									?>
 									</tbody>
 								</table>
                      </div>
@@ -51,3 +59,5 @@
 
         </div>
         <!-- /#page-wrapper -->
+
+<?php include "includes/admin_footer.php"; ?>
