@@ -55,7 +55,7 @@
 										</tr>
 									</thead>
 									<tbody>
-									<?php
+									<?php //FIND ALL CATEGORIES QUERY
 										$query = "SELECT * FROM categories";
 										$select_categories = mysqli_query($connect, $query);
 
@@ -64,8 +64,21 @@
 											$cat_title = $row['cat_title']; 
 
 											echo "<tr><th>{$cat_id}</th>";
-											echo "<th>{$cat_title}</th></tr>";
+											echo "<th>{$cat_title}</th>";
+											echo "<th><a href='categories.php?delete={$cat_id}'> Delete </a></th></tr>";
 										}
+									?>
+
+									<?php
+									
+									if (isset($_GET['delete'])) {
+										$get_cat_id = $_GET['delete'];
+
+										$query = "DELETE FROM categories WHERE cat_id = {$get_cat_id}";
+										$delete_query = mysqli_query($connect, $query);
+										header("Location: categories.php");
+									}
+
 									?>
 									</tbody>
 								</table>
