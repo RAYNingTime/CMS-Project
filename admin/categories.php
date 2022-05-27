@@ -16,7 +16,26 @@
                             <small>Author</small>
                         </h1>
 							<div class="col-xs-6">
-								<form action="">
+							<?php
+							
+							if (isset($_POST['submit'])) {
+								$cat_title = $_POST['cat_title'];
+
+								if ($cat_title == "" || empty($cat_title)){
+									echo "This field should not be empty!";
+								} else {
+									$query = "INSERT INTO categories(cat_title) VALUES ('{$cat_title}')";
+
+									$create_category = mysqli_query($connect , $query);
+
+									if (!$create_category)
+										die('QUERY FAILED'. mysqli_error($connect));
+								}
+							}
+
+							?>
+
+								<form action="" method = "post">
 									<div class="form-group">
 										<label for="cat-title">Add Category</label>
 										<input class = "form-control" type="text" name = "cat_title">
@@ -37,7 +56,7 @@
 									</thead>
 									<tbody>
 									<?php
-										$query = "SELECT * FROM categories LIMIT 3";
+										$query = "SELECT * FROM categories";
 										$select_categories = mysqli_query($connect, $query);
 
 										while($row = mysqli_fetch_assoc($select_categories)) {
