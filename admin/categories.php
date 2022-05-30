@@ -16,8 +16,8 @@
                             <small>Author</small>
                         </h1>
 							<div class="col-xs-6">
-								
-							 <?php insert_categories();?>
+
+							 <?php insertCategories();?>
 								
 								<form action="" method = "post">
 									<div class="form-group">
@@ -30,11 +30,9 @@
 								</form>
 							
 
-							<?php 
+							<?php //UPDATE AND INCLUDE QUERY
 							if(isset($_GET['edit'])) {
-
 								$cat_id = $_GET['edit'];
-
 								include "includes/update_categories.php";
 							}
 							
@@ -52,32 +50,11 @@
 									</thead>
 									<tbody>
 									<?php //FIND ALL CATEGORIES QUERY
-										$query = "SELECT * FROM categories";
-										$select_categories = mysqli_query($connect, $query);
-
-										while($row = mysqli_fetch_assoc($select_categories)) {
-											$cat_id = $row['cat_id'];
-											$cat_title = $row['cat_title']; 
-
-											echo "<tr><th>{$cat_id}</th>";
-											echo "<th>{$cat_title}</th>";
-											echo "<th><a href='categories.php?delete={$cat_id}'> Delete </a></th>";
-											echo "<th><a href='categories.php?edit={$cat_id}'> Edit </a></th></tr>";
-										}
-									?>
-
-									<?php
+									findAllCategories();
 									
+
 									//DELETE QUERT
-
-									if (isset($_GET['delete'])) {
-										$get_cat_id = $_GET['delete'];
-
-										$query = "DELETE FROM categories WHERE cat_id = {$get_cat_id}";
-										$delete_query = mysqli_query($connect, $query);
-										header("Location: categories.php");
-									}
-
+									deleteCategories();
 									?>
 									</tbody>
 								</table>
