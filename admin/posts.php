@@ -25,8 +25,8 @@
 							}
 
 							switch ($source){
-								case 200:
-									echo 'NICE 200';
+								case 'add_post':
+									include "includes/add_post.php";;
 									break;
 
 								default:
