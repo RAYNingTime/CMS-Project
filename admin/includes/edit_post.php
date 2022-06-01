@@ -29,8 +29,25 @@ if(isset($_GET['p_id'])) {
 	</div>
 
 	<div class="form-group">
-		<label for="title">Post Category Id</label>
-		<input value=<?php echo "'{$post_category_id}'"?> type="text" class="form-control" name="post_category_id">
+		<select name="" id="">
+			<?php
+				$cat_id = $_GET['edit'];
+
+				$query = "SELECT * FROM categories";
+				$select_categories = mysqli_query($connect, $query);
+
+				if(!$select_categories){
+					die("QUERY FAILED " . mysqli_error($connection));
+				}
+
+				while($row = mysqli_fetch_assoc($select_categories)) {
+					$cat_id = $row['cat_id'];
+					$cat_title = $row['cat_title'];
+					
+					echo "<option value='{$cat_id}'>$cat_title</option>";
+				}
+			?>
+		</select>
 	</div>
 
 	<div class="form-group">
@@ -45,6 +62,8 @@ if(isset($_GET['p_id'])) {
 
 	<div class="form-group">
 		<label for="title">Post Image</label>
+		</br>
+		<img width = "300" src="../images/<?php echo $post_image?>" alt="">
 		<input type="file" name="image">
 	</div>
 
