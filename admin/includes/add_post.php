@@ -14,6 +14,14 @@
 		$post_comment_count = 4;
 
 		move_uploaded_file($post_image_temp, "../images/$post_image");
+
+		$query = "INSERT INTO posts(post_category_id, post_title, post_author, post_date, post_image, post_content, post_tags, post_comment_count, post_status)";
+		$query .= "VALUES({$post_category_id},'{$post_title}','{$post_author}', now() ,'{$post_image}','{$post_content}','{$post_tags}',{$post_comment_count},'{$post_status}')";
+
+		$create_post_query = mysqli_query($connect, $query);
+
+		if(!$create_post_query)
+			die("QUERY FAILED   " . mysqli_error($connect));
 	}
 ?>
 
@@ -51,8 +59,7 @@
 	
 	<div class="form-group">
 		<label for="title">Post Content</label>
-		<textarea class="form-control" name="post_content" id="" cols="30" rows="10">
-		</textarea>
+		<textarea class="form-control" name="post_content" id="" cols="30" rows="10"></textarea>
 	</div>
 
 	<div class="form-group">
