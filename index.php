@@ -28,6 +28,7 @@
                     $post_content = substr($row['post_content'],0,200);
             ?>
 
+
            
 
                 <!-- First Blog Post -->
