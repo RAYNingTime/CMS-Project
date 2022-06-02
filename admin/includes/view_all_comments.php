@@ -2,11 +2,11 @@
 	<thead>
 		<tr>
 			<th>ID</th>
-			<th>Post ID</th>
 			<th>Author</th>
+			<th>Comment</th>
 			<th>Email</th>
-			<th>Content</th>
 			<th>Status</th>
+			<th>In response to</th>
 			<th>Date</th>
 			<th>Approve</th>
 			<th>Unapprove</th>
@@ -41,14 +41,14 @@
 				// echo "<td>{$cat_title}</td>";
 
 				echo "<td>{$comment_author}</td>";
-				echo "<td>{$comment_email}</td>";
 				echo "<td>{$comment_content}</td>";
+				echo "<td>{$comment_email}</td>";
 				echo "<td>{$comment_status}</td>";
+				echo "<td>Some Title</td>";
 				echo "<td>{$comment_date}</td>";
-				echo "<td><a href='posts.php?source=edit_post&p_id={$post_id}'>Approve</a></td>";
-				echo "<td><a href='posts.php?delete={$post_id}'>Unapprove</a></td>";
-				echo "<td><a href='posts.php?source=edit_post&p_id={$post_id}'>Edit</a></td>";
-				echo "<td><a href='posts.php?delete={$post_id}'>Delete</a></td>";
+				echo "<td><a href='posts.php?source=edit_post&p_id='>Approve</a></td>";
+				echo "<td><a href='posts.php?delete='>Unapprove</a></td>";
+				echo "<td><a href='posts.php?delete='>Delete</a></td>";
 				echo "</tr>";
 			}
 			?>
