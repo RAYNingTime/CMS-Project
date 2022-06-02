@@ -16,9 +16,11 @@
                     <small>Secondary Text</small>
                 </h1>
             <?php
-                $query = "SELECT * FROM posts";
+                $query = "SELECT * FROM posts ";
                 $select_all_posts_query = mysqli_query($connect, $query);
 
+
+                $posted = FALSE;
                 while($row = mysqli_fetch_assoc($select_all_posts_query)) {
                     $post_id = $row['post_id'];
                     $post_title = $row['post_title'];
@@ -26,11 +28,11 @@
                     $post_date = $row['post_date'];
                     $post_image = $row['post_image'];
                     $post_content = substr($row['post_content'],0,200);
+                    $post_status = $row['post_status'];
+
+                    if($post_status == 'published') {
+                        $posted = TRUE;
             ?>
-
-
-           
-
                 <!-- First Blog Post -->
                 <h2>
                     <a href="post.php?p_id=<?php echo $post_id;?>"><?php echo $post_title;?></a>
@@ -47,7 +49,13 @@
 
                 <hr>
             <?php
+            }}
+
+            if ($posted == FALSE){
+                echo "</br></br><h4 class='text-center'>Currently, there are no posts.</h4>";
+                echo "<strong><p style='color:grey;' class='text-center'>Return later.</p></strong>";
             }
+
             ?>
 
             </div>
