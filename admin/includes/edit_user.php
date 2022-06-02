@@ -80,6 +80,27 @@ if(isset($_POST['update_post'])) {
 	</div>
 
 	<div class="form-group">
+	<label for="title">Post Category</label>
+		<select name="user_role" id="">
+			<?php
+				$query = "SELECT * FROM users";
+				$select_users = mysqli_query($connect, $query);
+
+				if(!$select_users){
+					die("QUERY FAILED " . mysqli_error($connect));
+				}
+
+				while($row = mysqli_fetch_assoc($select_users)) {
+					$user_id = $row['user_id'];
+					$user_role = $row['user_role'];
+					
+					echo "<option value='{$user_id}'>$user_role</option>";
+				}
+			?>
+		</select>
+	</div>
+
+	<div class="form-group">
 		<select name="post_category" id="">
 			<?php
 				$query = "SELECT * FROM categories";
