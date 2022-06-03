@@ -58,9 +58,30 @@
 	<div class="form-group">
 	<label for="title">Post Category</label>
 		<select name="user_role" id="">
-			<option value="subscriber">Select Option</option>
-			<option value="admin">Admin</option>
-			<option value="subscriber">Subscriber</option>
+			<?php
+
+			switch ($user_role) { 
+				case 'admin': {
+					echo "<option value='subscriber'>Select Option</option>";
+					echo "<option value='admin' selected>Admin</option>";
+					echo "<option value='subscriber'>Subscriber</option>";
+					break;
+				}
+				case 'subscriber': {
+					echo "<option value='subscriber'>Select Option</option>";
+					echo "<option value='admin'>Admin</option>";
+					echo "<option value='subscriber' selected>Subscriber</option>";
+					break;
+				}
+
+				default: {
+					echo "<option value='subscriber' selected>Select Option</option>";
+					echo "<option value='admin'>Admin</option>";
+					echo "<option value='subscriber'>Subscriber</option>";
+					break;
+				}
+			}
+			?>
 
 		</select>
 	</div>
