@@ -32,7 +32,7 @@
 			$_SESSION['username'] = $db_username;
 			$_SESSION['first_name'] = $db_user_firstname;
 			$_SESSION['last_name'] = $db_user_lastname;
-			$_SESSION['role'] = $db_user_role;
+			$_SESSION['user_role'] = $db_user_role;
 			
 			header("Location: ../admin");
 		}
