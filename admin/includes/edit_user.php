@@ -22,24 +22,23 @@
 		$user_firstname = $_POST['user_firstname'];
 		$user_lastname = $_POST['user_lastname'];
 		$user_role = $_POST['user_role'];
-
-		// $post_image = $_FILES['image']['name'];
-		// $post_image_temp = $_FILES['image']['tmp_name'];
-
 		$username = $_POST['username'];
 		$user_email = $_POST['user_email'];
 		$user_password = $_POST['user_password'];
-		// $post_date = date('d-m-y');
 
-		// move_uploaded_file($post_image_temp, "../images/$post_image");
+		$query = "UPDATE users SET ";
+		$query .="user_firstname = '{$user_firstname}', ";
+		$query .="user_lastname  = '{$user_lastname}', ";
+		$query .="username       = '{$username}', ";
+		$query .="user_password  = '{$user_password}', ";
+		$query .="user_email     = '{$user_email}', ";
+		$query .="user_role      = '{$user_role}' ";
+		$query .="WHERE user_id  = {$the_user_id} ";
+	
+		$update_user = mysqli_query($connect, $query);
 
-		$query = "INSERT INTO users(user_firstname, user_lastname, user_role, username, user_email, user_password)";
-		$query .= "VALUES('{$user_firstname}','{$user_lastname}','{$user_role}','{$username}','{$user_email}','{$user_password}')";
-
-		$create_user_query = mysqli_query($connect, $query);
-
-		if(!$create_user_query)
-			die("QUERY FAILED   " . mysqli_error($connect));
+		if(!$update_user)
+		 die("QUERY FAILED " . mysqli_error($connect));
 	}
 ?>
 
@@ -62,20 +61,17 @@
 
 			switch ($user_role) { 
 				case 'admin': {
-					echo "<option value='subscriber'>Select Option</option>";
 					echo "<option value='admin' selected>Admin</option>";
 					echo "<option value='subscriber'>Subscriber</option>";
 					break;
 				}
 				case 'subscriber': {
-					echo "<option value='subscriber'>Select Option</option>";
 					echo "<option value='admin'>Admin</option>";
 					echo "<option value='subscriber' selected>Subscriber</option>";
 					break;
 				}
 
 				default: {
-					echo "<option value='subscriber' selected>Select Option</option>";
 					echo "<option value='admin'>Admin</option>";
 					echo "<option value='subscriber'>Subscriber</option>";
 					break;
