@@ -21,6 +21,8 @@
 
 		if(!$create_user_query)
 			die("QUERY FAILED   " . mysqli_error($connect));
+
+			echo "User Created: ". " " . " <a href='users.php'> View Users </a>";
 	}
 ?>
 

@@ -21,6 +21,8 @@
 
 		if(!$create_post_query)
 			die("QUERY FAILED   " . mysqli_error($connect));
+
+		echo "Post Created: ". " " . " <a href='posts.php'> View Posts </a>";
 	}
 ?>
 
