@@ -126,7 +126,6 @@
 
                                         echo "<div class='huge'>$category_counts</div>";
                                     ?>
-
                                         <div>Categories</div>
                                     </div>
                                 </div>
