@@ -152,12 +152,16 @@
                         ['Data', 'Count'],
 
                         <?php
-                        
-                        
-                        
-                        ?>
+                        define("MAX_SECTIONS","4");
+                        $element_text = ['Posts','Comments', 'Users', 'Categories'];
+                        $element_count = [$post_counts, $comment_counts, $user_counts, $category_counts];
 
-                        ['Posts', 1000]
+                        for($i = 0; $i < MAX_SECTIONS; $i +=1){
+                            echo "['{$element_text[$i]}', $element_count[$i]]";
+                            if ($i < MAX_SECTIONS-1)
+                             echo ",";
+                        }
+                        ?>
                         ]);
 
                         var options = {
