@@ -40,10 +40,13 @@
                $post_date = $row['post_date'];
                $post_image = $row['post_image'];
                $post_content = $row['post_content'];
+               $post_status = $row['post_status'];
+
+               if ($post_status == 'published') {
             ?>
 
            
-
+                
                 <!-- First Blog Post -->
                 <h2>
                     <a href="#"><?php echo $post_title;?></a>
@@ -53,14 +56,14 @@
                 </p>
                 <p><span class="glyphicon glyphicon-time"></span> Posted on <?php echo $post_date;?></p>
                 <hr>
-                <img class="img-responsive" src=<?php echo '"'. $post_image . '"';?> alt="">
+                <img class="img-responsive" src=<?php echo "'images/". $post_image. "'";?> alt="">
                 <hr>
                 <p><?php echo $post_content;?></p>
                 <a class="btn btn-primary" href="#">Read More <span class="glyphicon glyphicon-chevron-right"></span></a>
 
                 <hr>
             <?php
-					}while ($count != 0);;
+                    }}while ($count != 0);;
 				}
             ?>
 
