@@ -39,6 +39,8 @@
 
 		if(!$update_user)
 		 die("QUERY FAILED " . mysqli_error($connect));
+
+		 echo "User Updated: ". " " . " <a href='users.php'> View Users </a>";
 	}
 ?>
 

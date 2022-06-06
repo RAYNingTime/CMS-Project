@@ -61,6 +61,7 @@ if(isset($_POST['update_post'])) {
 		die("QUERY FAILED" . mysqli_error($connect));
 	}
 
+	echo "Post Updated: ". " " . " <a href='posts.php'> View Posts </a>";
 }
 ?>
 
