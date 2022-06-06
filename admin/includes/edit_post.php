@@ -93,8 +93,12 @@ if(isset($_POST['update_post'])) {
 					$cat_id = $row['cat_id'];
 					$cat_title = $row['cat_title'];
 					
-					echo "<option value='{$cat_id}'>$cat_title</option>";
+					if ($post_category_id == $cat_id)
+						echo "<option value='{$cat_id}' selected>$cat_title</option>";
+					else
+						echo "<option value='{$cat_id}'>$cat_title</option>";
 				}
+
 			?>
 		</select>
 	</div>
@@ -106,7 +110,30 @@ if(isset($_POST['update_post'])) {
 
 	<div class="form-group">
 		<label for="title">Post Status</label>
-		<input value=<?php echo "'{$post_status}'"?> type="text" class="form-control" name="post_status">
+		<select name="post_status" id="">
+			<?php
+
+			switch ($post_status) { 
+				case 'draft': {
+					echo "<option value='draft' selected>Draft</option>";
+					echo "<option value='published'>Published</option>";
+					break;
+				}
+				case 'published': {
+					echo "<option value='draft'>Draft</option>";
+					echo "<option value='published' selected>Published</option>";
+					break;
+				}
+
+				default: {
+					echo "<option value='draft'>Draft</option>";
+					echo "<option value='published'>Published</option>";
+					break;
+				}
+			}
+			?>
+
+		</select>
 	</div>
 
 	<div class="form-group">
