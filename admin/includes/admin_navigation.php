@@ -41,7 +41,7 @@
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> 
                     
-                    <?php echo $user_firstname . " " . $user_lastname; ?>
+                    <?php echo $user_firstname . "  " . $user_lastname; ?>
                     
                     <b class="caret"></b></a>
                     <ul class="dropdown-menu">
