@@ -62,7 +62,7 @@ if(isset($_POST['update_post'])) {
 	}
 
 	
-	echo "Post Updated: ". " " . " <a href='posts.php'> View Posts </a>";
+	echo "<p class='bg-success'>Post Updated: <a href='posts.php'> View all posts </a> or <a href='../post.php?p_id={$the_post_id}'>View Post</a> </p>";
 }
 ?>
 
