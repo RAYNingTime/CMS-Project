@@ -22,7 +22,10 @@
 		if(!$create_post_query)
 			die("QUERY FAILED   " . mysqli_error($connect));
 
+		$get_post_id = mysqli_insert_id($connect);
+		
 		echo "Post Created: ". " " . " <a href='posts.php'> View Posts </a>";
+		echo "<p class='bg-success'>Post Created: <a href='posts.php'> View all posts </a> or <a href='../post.php?p_id={$get_post_id}'>View Post</a> </p>";
 	}
 ?>
 
@@ -59,7 +62,7 @@
 		<input type="text" class="form-control" name="author">
 	</div>
 
-	
+
 	<div class="form-group">
 	<label for="title">Post Status</label>
 		<select name="post_status" id="">
