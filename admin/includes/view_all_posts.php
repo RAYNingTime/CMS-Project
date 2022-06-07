@@ -33,7 +33,7 @@ if(isset($_POST['checkBoxArray'])) {
 		<div id="bulkOptionsContainer" class="col-xs-4">
 			<select class ="form-control" name="bulk_option" id="">
 				<option value="">Select Option</option>
-				<option value="publish">Publish</option>
+				<option value="published">Publish</option>
 				<option value="draft">Draft</option>
 				<option value="delete">Delete</option>
 			</select>
