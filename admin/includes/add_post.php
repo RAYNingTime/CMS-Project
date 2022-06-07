@@ -59,6 +59,7 @@
 		<input type="text" class="form-control" name="author">
 	</div>
 
+	
 	<div class="form-group">
 	<label for="title">Post Status</label>
 		<select name="post_status" id="">
