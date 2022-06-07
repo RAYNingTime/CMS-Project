@@ -1,5 +1,6 @@
 <?php include "db.php";?>
 <?php include "header.php";?>
+<?php session_start();?>
 
 <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
         <div class="container">
@@ -32,7 +33,16 @@
 							echo "<li><a href='#'>{$cat_title}</a></li>";
 						}
 						echo "<li><a href='admin'>Admin</a></li>";
+                        
+                        if (isset($_SESSION['user_role'])){
+                            if(isset($_GET['p_id'])){
+                                $the_post_id = $_GET['p_id'];
+                                echo "<li><a href='admin/posts.php?source=edit_post&p_id={$the_post_id}'>Edit Post</a></li>";
+                            }   
+                        }
 						?>
+
+                        
 
                 </ul>
             </div>
