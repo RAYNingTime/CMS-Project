@@ -143,6 +143,10 @@
                <!-- /.row -->
 
                 <?php
+                $query = "SELECT * FROM posts WHERE post_status ='published'";;
+                $select_all_published_posts = mysqli_query($connect, $query);
+                $published_post_counts = mysqli_num_rows($select_all_published_posts);
+
                 $query = "SELECT * FROM posts WHERE post_status ='draft'";;
                 $select_all_draft_posts = mysqli_query($connect, $query);
                 $draft_post_counts = mysqli_num_rows($select_all_draft_posts);
@@ -168,9 +172,9 @@
                         ['Data', 'Count'],
 
                         <?php
-                        define("MAX_SECTIONS","7");
-                        $element_text = ['Active Posts','Draft Posts' ,'Comments','Unapproved Comments','Users' ,'Subscriber Users', 'Categories'];
-                        $element_count = [$post_counts, $draft_post_counts, $comment_counts,$unapproved_comment_counts, $user_counts,$subscriber_user_counts, $category_counts];
+                        define("MAX_SECTIONS","8");
+                        $element_text = ['All Posts','Published Posts','Draft Posts' ,'Comments','Unapproved Comments','Users' ,'Subscriber Users', 'Categories'];
+                        $element_count = [$post_counts, $published_post_counts, $draft_post_counts, $comment_counts,$unapproved_comment_counts, $user_counts,$subscriber_user_counts, $category_counts];
 
                         for($i = 0; $i < MAX_SECTIONS; $i +=1){
                             echo "['{$element_text[$i]}', $element_count[$i]]";

@@ -39,7 +39,7 @@
 	</div>
 
 	<div class="form-group">
-	<label for="title">Post Category</label>
+	<label for="title">User Role</label>
 		<select name="user_role" id="">
 			<option value="subscriber">Select Option</option>
 			<option value="admin">Admin</option>
