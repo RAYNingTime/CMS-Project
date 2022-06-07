@@ -17,6 +17,7 @@
 
 		<thead>
 			<tr>
+				<th><input type="checkbox" id="selectAllBoxes"></th>
 				<th>ID</th>
 				<th>Category</th>
 				<th>Title</th>
@@ -50,7 +51,11 @@
 					$post_comment_count = $row['post_comment_count']; 
 					$post_status = $row['post_status']; 
 
-					echo "<tr>";
+					echo "<tr>"; ?>
+
+					<td><input class='checkBoxes' type='checkbox' name='checkBoxArray[]' value=<?php echo {$post_id};?>>
+					
+					<?php 
 					echo "<td>{$post_id}</td>";
 					
 					$query = "SELECT * FROM categories WHERE cat_id = {$post_category_id}";
