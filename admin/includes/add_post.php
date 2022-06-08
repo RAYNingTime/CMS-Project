@@ -24,7 +24,6 @@
 
 		$get_post_id = mysqli_insert_id($connect);
 		
-		echo "Post Created: ". " " . " <a href='posts.php'> View Posts </a>";
 		echo "<p class='bg-success'>Post Created: <a href='posts.php'> View all posts </a> or <a href='../post.php?p_id={$get_post_id}'>View Post</a> </p>";
 	}
 ?>
