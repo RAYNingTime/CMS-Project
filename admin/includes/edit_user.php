@@ -20,7 +20,6 @@
 	if (isset($_POST['edit_user'])) {
 		if (!empty($_POST['user_old_password']) && !empty($_POST['user_new_password'])) {
 
-
 		$query = "SELECT user_randSalt FROM users";
 		$select_randSalt_query = mysqli_query($connect, $query);
 		if(!$select_randSalt_query){
