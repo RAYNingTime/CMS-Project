@@ -27,6 +27,8 @@ if(isset($_POST['submit'])) {
         $row = mysqli_fetch_assoc($select_randsalt_query);
         $randSalt = $row['user_randSalt'];
 
+        $password = crypt($password, $randSalt);
+
         $query = "INSERT INTO users (username, user_email, user_password, user_role, user_firstname, user_lastname) ";
         $query .= "VALUES('{$username}', '{$email}', '{$password}', 'subscriber', '{$firstname}', '{$lastname}')";
         $register_user_query = mysqli_query($connect, $query);
@@ -37,7 +39,7 @@ if(isset($_POST['submit'])) {
 
         header("Location: index.php");
 
-        
+
     } else {
         // echo "<strong><p style='color:red;font-size:25px;' class='text-center'>You should fill all the fields!</p></strong>";
         echo "<script>alert('Fields cannot be empty')</script>";
