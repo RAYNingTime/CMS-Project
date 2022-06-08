@@ -14,33 +14,57 @@
 		$user_lastname = $row['user_lastname']; 
 		$user_email = $row['user_email']; 
 		$user_image = $row['user_image']; 
-		$user_role = $row['user_role']; 
-
+		$user_role = $row['user_role'];
 	}
 
 	if (isset($_POST['edit_user'])) {
-		$user_firstname = $_POST['user_firstname'];
-		$user_lastname = $_POST['user_lastname'];
-		$user_role = $_POST['user_role'];
-		$username = $_POST['username'];
-		$user_email = $_POST['user_email'];
-		$user_password = $_POST['user_password'];
+		if (!empty($_POST['user_old_password']) && !empty($_POST['user_new_password'])) {
 
-		$query = "UPDATE users SET ";
-		$query .="user_firstname = '{$user_firstname}', ";
-		$query .="user_lastname  = '{$user_lastname}', ";
-		$query .="username       = '{$username}', ";
-		$query .="user_password  = '{$user_password}', ";
-		$query .="user_email     = '{$user_email}', ";
-		$query .="user_role      = '{$user_role}' ";
-		$query .="WHERE user_id  = {$the_user_id} ";
+
+		$query = "SELECT user_randSalt FROM users";
+		$select_randSalt_query = mysqli_query($connect, $query);
+		if(!$select_randSalt_query){
+			die("QUERY FAILED ". mysqli_error($connect));
+		}
+
+		$row = mysqli_fetch_array($select_randSalt_query);
+		$salt = $row['user_randSalt'];
+		$hashed_old_password = crypt($_POST['user_old_password'], $salt);
+		$hashed_new_password = crypt($_POST['user_new_password'], $salt);
+
+		if ($hashed_old_password == $user_password) {
+			$user_firstname = $_POST['user_firstname'];
+			$user_lastname = $_POST['user_lastname'];
+			$user_role = $_POST['user_role'];
+			$username = $_POST['username'];
+			$user_email = $_POST['user_email'];
+			$user_password = $_POST['user_new_password'];
 	
-		$update_user = mysqli_query($connect, $query);
+			$query = "UPDATE users SET ";
+			$query .="user_firstname = '{$user_firstname}', ";
+			$query .="user_lastname  = '{$user_lastname}', ";
+			$query .="username       = '{$username}', ";
+			$query .="user_password  = '{$hashed_new_password}', ";
+			$query .="user_email     = '{$user_email}', ";
+			$query .="user_role      = '{$user_role}' ";
+			$query .="WHERE user_id  = {$the_user_id} ";
+		
+			$update_user = mysqli_query($connect, $query);
+	
+			if(!$update_user)
+			 die("QUERY FAILED " . mysqli_error($connect));
+	
+			 echo "User Updated: ". " " . " <a href='users.php'> View Users </a>";
+		} else
+		echo "<script>alert('You entered an incorrect old password!')</script>";
 
-		if(!$update_user)
-		 die("QUERY FAILED " . mysqli_error($connect));
+		} else if (empty($_POST['user_old_password']))
+		echo "<script>alert('You should enter your old password!')</script>";
+	else if (empty($_POST['user_new_password']))
+		echo "<script>alert('You should enter your old password!')</script>";
 
-		 echo "User Updated: ". " " . " <a href='users.php'> View Users </a>";
+
+
 	}
 ?>
 
@@ -102,8 +126,13 @@
 	</div>
 
 	<div class="form-group">
-		<label for="title">Password</label>
-		<input type="password" value=<?php echo $user_password;?> class="form-control" name="user_password">
+		<label for="title">Old Password</label>
+		<input type="password" class="form-control" name="user_old_password">
+	</div>
+
+	<div class="form-group">
+		<label for="title">New Password</label>
+		<input type="password" class="form-control" name="user_new_password">
 	</div>
 
 	<div class="form-group">
