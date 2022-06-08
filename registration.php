@@ -26,7 +26,6 @@ if(isset($_POST['submit'])) {
 
         $row = mysqli_fetch_assoc($select_randsalt_query);
         $randSalt = $row['user_randSalt'];
-
         $password = crypt($password, $randSalt);
 
         $query = "INSERT INTO users (username, user_email, user_password, user_role, user_firstname, user_lastname) ";
