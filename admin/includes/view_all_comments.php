@@ -61,7 +61,6 @@
 				echo "</tr>";
 			}
 			?>
-
 	</tbody>
 </table>
 
