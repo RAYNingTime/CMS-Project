@@ -20,6 +20,10 @@ if(isset($_POST['submit'])) {
             die("QUERY FAILED " . mysqli_error($connect));
         }
 
+        while($row = mysqli_fetch_assoc($select_randsalt_query)){
+            $randSalt = $row['randSalt'];
+        }
+
 
     } else {
         // echo "<strong><p style='color:red;font-size:25px;' class='text-center'>You should fill all the fields!</p></strong>";
