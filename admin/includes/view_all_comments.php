@@ -64,6 +64,7 @@
 	</tbody>
 </table>
 
+
 <?php 
 if(isset($_GET['delete'])) {
 	$get_comment_id = $_GET['delete'];
