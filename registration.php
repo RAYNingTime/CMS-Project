@@ -1,5 +1,5 @@
 <?php  include "includes/header.php"; ?>
-
+<?php  include "includes/navigation.php"; ?>
 
 <?php
 
@@ -8,10 +8,14 @@ if(isset($_POST['submit'])) {
         $username = $_POST['username'];
         $email = $_POST['email'];
         $password = $_POST['password'];
+        $firstname = $_POST['firstname'];
+        $lastname = $_POST['lastname'];
 
         $username = mysqli_real_escape_string($connect, $username);
         $email = mysqli_real_escape_string($connect, $email);
         $password = mysqli_real_escape_string($connect, $password);
+        $firstname = mysqli_real_escape_string($connect, $firstname);
+        $lastname = mysqli_real_escape_string($connect, $lastname);
 
         $query = "SELECT user_randSalt FROM users";
         $select_randsalt_query = mysqli_query($connect, $query);
@@ -20,10 +24,16 @@ if(isset($_POST['submit'])) {
             die("QUERY FAILED " . mysqli_error($connect));
         }
 
-        while($row = mysqli_fetch_assoc($select_randsalt_query)){
-            $randSalt = $row['randSalt'];
-        }
+        $row = mysqli_fetch_assoc($select_randsalt_query);
+        $randSalt = $row['user_randSalt'];
 
+        $query = "INSERT INTO users (username, user_email, user_password, user_role, user_firstname, user_lastname) ";
+        $query .= "VALUES('{$username}', '{$email}', '{$password}', 'subscriber', '{$firstname}', '{$lastname}')";
+        $register_user_query = mysqli_query($connect, $query);
+
+        if(!$register_user_query) {
+            die("QUERY FAILED " . mysqli_error($connect)) . ' ' . mysqli_errno($connect);
+        }
 
     } else {
         // echo "<strong><p style='color:red;font-size:25px;' class='text-center'>You should fill all the fields!</p></strong>";
@@ -37,7 +47,7 @@ if(isset($_POST['submit'])) {
 
     <!-- Navigation -->
     
-    <?php  include "includes/navigation.php"; ?>
+
     
  
     <!-- Page Content -->
@@ -52,6 +62,14 @@ if(isset($_POST['submit'])) {
                         <div class="form-group">
                             <label for="username" class="sr-only">username</label>
                             <input type="text" name="username" id="username" class="form-control" placeholder="Enter Desired Username">
+                        </div>
+                        <div class="form-group">
+                            <label for="firstname" class="sr-only">firstname</label>
+                            <input type="text" name="firstname" id="firstname" class="form-control" placeholder="Enter Firstname">
+                        </div>
+                        <div class="form-group">
+                            <label for="lastname" class="sr-only">lastname</label>
+                            <input type="text" name="lastname" id="lastname" class="form-control" placeholder="Enter Lastname">
                         </div>
                          <div class="form-group">
                             <label for="email" class="sr-only">Email</label>
