@@ -65,7 +65,6 @@
 </table>
 
 <?php 
-
 if(isset($_GET['delete'])) {
 	$get_comment_id = $_GET['delete'];
 	$query = "DELETE FROM comments WHERE comment_id = {$get_comment_id}";
