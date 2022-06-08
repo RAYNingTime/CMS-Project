@@ -4,10 +4,23 @@
 <?php
 
 if(isset($_POST['submit'])) {
-    if(isset($_POST['username']) && isset($_POST['email']) && isset($_POST['password'])) {
-        echo "<h1> Welcome, {$_POST['username']}!</h1>";
+    if(!empty($_POST['username']) && !empty($_POST['email']) && !empty($_POST['password'])) {
+        $username = $_POST['username'];
+        $email = $_POST['email'];
+        $password = $_POST['password'];
+
+        $username = mysqli_real_escape_string($connect, $username);
+        $email = mysqli_real_escape_string($connect, $email);
+        $password = mysqli_real_escape_string($connect, $password);
+
+        
+    } else {
+        // echo "<strong><p style='color:red;font-size:25px;' class='text-center'>You should fill all the fields!</p></strong>";
+        echo "<script>alert('Fields cannot be empty')</script>";
     }
 }
+
+
 
 ?>
 
