@@ -35,6 +35,9 @@ if(isset($_POST['submit'])) {
             die("QUERY FAILED " . mysqli_error($connect)) . ' ' . mysqli_errno($connect);
         }
 
+        header("Location: index.php");
+
+        
     } else {
         // echo "<strong><p style='color:red;font-size:25px;' class='text-center'>You should fill all the fields!</p></strong>";
         echo "<script>alert('Fields cannot be empty')</script>";

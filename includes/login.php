@@ -31,9 +31,11 @@
 			$_SESSION['user_role'] = $db_user_role;
 			
 			header("Location: ../admin");
-		} 
-		else header("Location: ../index.php");
+		}
+		else header("Location: ../index.php"); 
 
 		}
 	}
+
+
 ?>

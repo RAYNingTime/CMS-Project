@@ -14,7 +14,8 @@
 						  </form><!-- search form -->
                     <!-- /.input-group -->
                 </div>
-
+                
+                <?php if (empty($_SESSION['username'])){?>
                 <!-- Blog Search Well -->
                 <div class="well">
                     <h4>Login</h4>
@@ -31,7 +32,20 @@
 					</form><!-- search form -->
                     <!-- /.input-group -->
                 </div>
+                <?php } else {?>
 
+                <!-- Blog Search Well -->
+                <div class="well">
+                    <h4>Profile</h4>
+                    <p style="font-size:20px;"><strong>Welcome, </strong><?php echo "{$_SESSION['first_name']}!";?></p>
+                    <p style="font-size:16px;">Hope you're having a great day!</p>
+                    <br>
+                    <h4>Menu</h4>
+                    <a href="includes/logout.php"><i class="fa fa-fw fa-power-off"></i> Log Out</a>
+                    <!-- /.input-group -->
+                </div>
+
+                <?php }?>
                 <!-- Blog Categories Well -->
                 <div class="well">
                     <h4>Blog Categories</h4>
