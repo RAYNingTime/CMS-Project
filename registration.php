@@ -1,14 +1,23 @@
 <?php  include "includes/header.php"; ?>
 
 
+<?php
+
+if(isset($_POST['submit'])) {
+    if(isset($_POST['username']) && isset($_POST['email']) && isset($_POST['password'])) {
+        echo "<h1> Welcome, {$_POST['username']}!</h1>";
+    }
+}
+
+?>
+
     <!-- Navigation -->
     
     <?php  include "includes/navigation.php"; ?>
     
  
     <!-- Page Content -->
-    <div class="container">
-    
+<div class="container">
 <section id="login">
     <div class="container">
         <div class="row">
@@ -38,8 +47,7 @@
     </div> <!-- /.container -->
 </section>
 
-
-        <hr>
+<hr>
 
 
 
