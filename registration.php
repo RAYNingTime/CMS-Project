@@ -13,7 +13,14 @@ if(isset($_POST['submit'])) {
         $email = mysqli_real_escape_string($connect, $email);
         $password = mysqli_real_escape_string($connect, $password);
 
-        
+        $query = "SELECT user_randSalt FROM users";
+        $select_randsalt_query = mysqli_query($connect, $query);
+
+        if(!$select_randsalt_query) {
+            die("QUERY FAILED " . mysqli_error($connect));
+        }
+
+
     } else {
         // echo "<strong><p style='color:red;font-size:25px;' class='text-center'>You should fill all the fields!</p></strong>";
         echo "<script>alert('Fields cannot be empty')</script>";
