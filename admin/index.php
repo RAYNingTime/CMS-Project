@@ -2,27 +2,6 @@
 
     <div id="wrapper">
 
-    <?php
-
-    $session = session_id();
-    $time = time();
-    $time_out_in_seconds = 30;
-    $time_out = $time - $time_out_in_seconds;
-
-    $query = "SELECT * FROM users_online WHERE session = '$session'";
-    $send_query = mysqli_query($connect, $query);
-    $count = mysqli_num_rows($send_query);
-
-    if($count == NULL) {
-        mysqli_query($connect, "INSERT INTO users_online(session, time) VALUES('$session', '$time')");
-    } else
-        mysqli_query($connect, "UPDATE users_online SET time = '$time' WHERE session = '$session'");
-
-        $users_online_query = mysqli_query($connect, "SELECT * FROM users_online WHERE time > '$time_out'");
-        $count_user = mysqli_num_rows($users_online_query);
-    ?>
-
-
         <?php include "includes/admin_navigation.php";?>
 
 
@@ -36,9 +15,6 @@
                         <h1 class="page-header">
                             Welcome to admin
                             <small><?php echo $_SESSION['username'];?></small>
-
-                            <?php echo "<h1>$count_user</h1>";?>
-                            <?php echo "<h1>$count</h1>";?>
                         </h1>
                     </div>
                 </div>
