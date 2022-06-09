@@ -16,6 +16,7 @@
                     <small>Secondary Text</small>
                 </h1>
             <?php
+            
                 const PER_PAGE = 3;
 
                 if(isset($_GET['page'])) {
