@@ -77,6 +77,15 @@
     
                 $query = "UPDATE posts SET post_comment_count = post_comment_count + 1 WHERE post_id = $the_post_id";
                 $update_comment_count = mysqli_query($connect,$query);
+
+                $view_query = "UPDATE posts SET post_view_count = post_view_count - 1 WHERE post_id = {$the_post_id}";
+                $send_query = mysqli_query($connect, $view_query);
+
+               ?> 
+
+                <script> header(header:"Location:/cms/post.php?p_id=".$the_post_id </script>
+
+               <?php
             } else {
             echo "<script>alert('Fields cannot be empty')</script>";
         }
