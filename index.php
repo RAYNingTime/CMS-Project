@@ -16,7 +16,7 @@
                     <small>Secondary Text</small>
                 </h1>
             <?php
-            
+
                 const PER_PAGE = 3;
 
                 if(isset($_GET['page'])) {
@@ -97,7 +97,11 @@
         <ul class="pager">
             <?php 
             for($i =1; $i <= $count; $i++){
-                echo "<li><a href='index.php?page={$i}'>{$i}</a></li>";
+
+                if($i == $page){
+                    echo "<li><a class='active_link' href='index.php?page={$i}'>{$i}</a></li>";
+                } else
+                    echo "<li><a href='index.php?page={$i}'>{$i}</a></li>";
             }
 
             ?>
