@@ -23,14 +23,14 @@
 			$db_user_lastname = $row['user_lastname'];
 			$db_user_role = $row['user_role'];
 			$db_user_password = $row['user_password'];
-
+		}
 			//Used for the old verification
 			// $db_user_randSalt = $row['user_randSalt'];
 
 			// OLD VERIFY
 			// $password = crypt($password, $db_user_randSalt);
 
-		if ($username === $db_username && password_verify($password, $db_user_password)){
+		if ($username == $db_username && password_verify($password, $db_user_password)){
 			$_SESSION['username'] = $db_username;
 			$_SESSION['first_name'] = $db_user_firstname;
 			$_SESSION['last_name'] = $db_user_lastname;
@@ -40,7 +40,7 @@
 		}
 		else header("Location: ../index.php"); 
 
-		}
+		
 	}
 
 
