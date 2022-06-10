@@ -19,7 +19,7 @@ if(isset($_POST['submit'])) {
 
         $password = password_hash($password, PASSWORD_BCRYPT, array('cost' => 12));
 
-        // ----- OLD ENCRYPTION ----
+        // OLD CRYPT
         // $query = "SELECT user_randSalt FROM users";
         // $select_randsalt_query = mysqli_query($connect, $query);
         // if(!$select_randsalt_query) {

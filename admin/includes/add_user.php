@@ -4,25 +4,29 @@
 		$user_lastname = $_POST['user_lastname'];
 		$user_role = $_POST['user_role'];
 
-		// $post_image = $_FILES['image']['name'];
-		// $post_image_temp = $_FILES['image']['tmp_name'];
+		// $user_image = $_FILES['image']['name'];
+		// $user_image_temp = $_FILES['image']['tmp_name'];
 
 		$username = $_POST['username'];
 		$user_email = $_POST['user_email'];
 		$user_password = $_POST['user_password'];
-		// $post_date = date('d-m-y');
 
-		$query = "SELECT user_randSalt FROM users";
-		$select_randSalt_query = mysqli_query($connect, $query);
-		if(!$select_randSalt_query){
-			die("QUERY FAILED ". mysqli_error($connect));
-		}
 
-		$row = mysqli_fetch_array($select_randSalt_query);
-		$salt = $row['user_randSalt'];
-		$user_password = crypt($user_password, $salt);
 
-		// move_uploaded_file($post_image_temp, "../images/$post_image");
+		// ---OLD ENCTRYPTION ---
+		// $query = "SELECT user_randSalt FROM users";
+		// $select_randSalt_query = mysqli_query($connect, $query);
+		// if(!$select_randSalt_query){
+		// 	die("QUERY FAILED ". mysqli_error($connect));
+		// }
+
+		// $row = mysqli_fetch_array($select_randSalt_query);
+		// $salt = $row['user_randSalt'];
+		// $user_password = crypt($user_password, $salt);
+
+
+		// Going to be added later on
+		// move_uploaded_file($user_image_temp, "../images/$user_image");
 
 		$query = "INSERT INTO users(user_firstname, user_lastname, user_role, username, user_email, user_password)";
 		$query .= "VALUES('{$user_firstname}','{$user_lastname}','{$user_role}','{$username}','{$user_email}','{$user_password}')";
