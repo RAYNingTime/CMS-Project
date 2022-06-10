@@ -20,18 +20,19 @@
 	if (isset($_POST['edit_user'])) {
 		if (!empty($_POST['user_old_password']) && !empty($_POST['user_new_password'])) {
 
-		$query = "SELECT user_randSalt FROM users";
-		$select_randSalt_query = mysqli_query($connect, $query);
-		if(!$select_randSalt_query){
-			die("QUERY FAILED ". mysqli_error($connect));
-		}
+		// OLD ENCRYPTING SYSTEM
+		// $query = "SELECT user_randSalt FROM users";
+		// $select_randSalt_query = mysqli_query($connect, $query);
+		// if(!$select_randSalt_query){
+		// 	die("QUERY FAILED ". mysqli_error($connect));
+		// }
 
-		$row = mysqli_fetch_array($select_randSalt_query);
-		$salt = $row['user_randSalt'];
-		$hashed_old_password = crypt($_POST['user_old_password'], $salt);
-		$hashed_new_password = crypt($_POST['user_new_password'], $salt);
+		// $row = mysqli_fetch_array($select_randSalt_query);
+		// $salt = $row['user_randSalt'];
+		$old_password = $_POST['user_old_password'];
+		$hashed_new_password =  password_hash($_POST['user_new_password'], PASSWORD_BCRYPT, array('cost' => 10));
 
-		if ($hashed_old_password == $user_password) {
+		if (password_verify($old_password, $user_password)) {
 			$user_firstname = $_POST['user_firstname'];
 			$user_lastname = $_POST['user_lastname'];
 			$user_role = $_POST['user_role'];
