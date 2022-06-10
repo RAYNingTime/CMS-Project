@@ -139,8 +139,7 @@ if(isset($_POST['checkBoxArray'])) {
 
 
 					if($count_comments>0){
-						$comment_id = $row['comment_id'];
-						echo "<td><a href='comment.php?id={$comment_id}'>$count_comments</a></td>";
+						echo "<td><a href='post_comments.php?id={$post_id}'>$count_comments</a></td>";
 				  } else {
 						echo "<td>$count_comments</td>";
 				  }
