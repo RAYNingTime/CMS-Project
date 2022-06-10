@@ -18,14 +18,12 @@ if(isset($_SESSION['username'])) {
 		$user_lastname = $row['user_lastname']; 
 		$user_email = $row['user_email']; 
 		$user_image = $row['user_image']; 
-		$user_role = $row['user_role']; 
 	}
 }
 
 if (isset($_POST['edit_user'])) {
 	$user_firstname = $_POST['user_firstname'];
 	$user_lastname = $_POST['user_lastname'];
-	$user_role = $_POST['user_role'];
 	$username = $_POST['username'];
 	$user_email = $_POST['user_email'];
 	$user_password = $_POST['user_password'];
@@ -36,7 +34,6 @@ if (isset($_POST['edit_user'])) {
 	$query .="username       = '{$username}', ";
 	$query .="user_password  = '{$user_password}', ";
 	$query .="user_email     = '{$user_email}', ";
-	$query .="user_role      = '{$user_role}' ";
 	$query .="WHERE user_id  = {$user_id} ";
 
 	$update_user = mysqli_query($connect, $query);
@@ -76,6 +73,7 @@ if (isset($_POST['edit_user'])) {
 									<input type="text" value=<?php echo $user_lastname;?> class="form-control" name="user_lastname">
 								</div>
 
+								<!-- We don't need this in profile
 								<div class="form-group">
 								<label for="title">Post Category</label>
 									<select name="user_role" id="">
@@ -102,7 +100,7 @@ if (isset($_POST['edit_user'])) {
 										?>
 
 									</select>
-								</div>
+								</div> -->
 
 
 
@@ -123,7 +121,7 @@ if (isset($_POST['edit_user'])) {
 
 								<div class="form-group">
 									<label for="title">Password</label>
-									<input type="password" value=<?php echo $user_password;?> class="form-control" name="user_password">
+									<input autocomplete=off type="password" class="form-control" name="user_password">
 								</div>
 
 								<div class="form-group">

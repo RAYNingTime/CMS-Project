@@ -15,7 +15,7 @@
 		$user_email = $row['user_email']; 
 		$user_image = $row['user_image']; 
 		$user_role = $row['user_role'];
-	}
+
 
 	if (isset($_POST['edit_user'])) {
 		if (!empty($_POST['user_old_password']) && !empty($_POST['user_new_password'])) {
@@ -29,7 +29,7 @@
 		// $row = mysqli_fetch_array($select_randSalt_query);
 		// $salt = $row['user_randSalt'];
 
-		
+
 		$old_password = $_POST['user_old_password'];
 		$hashed_new_password =  password_hash($_POST['user_new_password'], PASSWORD_BCRYPT, array('cost' => 10));
 
@@ -65,8 +65,8 @@
 		echo "<script>alert('You should enter your old password!')</script>";
 
 
-
 	}
+	} else header("Location: index.php");
 ?>
 
 <form action="" method="post" enctype="multipart/form-data">
@@ -128,7 +128,7 @@
 
 	<div class="form-group">
 		<label for="title">Old Password</label>
-		<input type="password" class="form-control" name="user_old_password">
+		<input autocomplete=off type="password" class="form-control" name="user_old_password">
 	</div>
 
 	<div class="form-group">
