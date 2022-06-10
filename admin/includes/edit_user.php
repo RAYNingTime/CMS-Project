@@ -26,9 +26,10 @@
 		// if(!$select_randSalt_query){
 		// 	die("QUERY FAILED ". mysqli_error($connect));
 		// }
-
 		// $row = mysqli_fetch_array($select_randSalt_query);
 		// $salt = $row['user_randSalt'];
+
+		
 		$old_password = $_POST['user_old_password'];
 		$hashed_new_password =  password_hash($_POST['user_new_password'], PASSWORD_BCRYPT, array('cost' => 10));
 
