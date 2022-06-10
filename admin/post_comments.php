@@ -72,9 +72,9 @@
 										}
 
 										echo "<td>{$comment_date}</td>";
-										echo "<td><a href='comments.php?approve=$comment_id'>Approve</a></td>";
-										echo "<td><a href='comments.php?unapprove=$comment_id'>Unapprove</a></td>";
-										echo "<td><a onClick=\"javascript: return confirm('Are you sure you want to delete?');\" href='comments.php?delete=$comment_id'>Delete</a></td>";
+										echo "<td><a href='post_comments.php?approve=$comment_id&id=". $_GET['id'] ."'>Approve</a></td>";
+										echo "<td><a href='post_comments.php?unapprove=$comment_id&id=". $_GET['id'] ."'>Unapprove</a></td>";
+										echo "<td><a onClick=\"javascript: return confirm('Are you sure you want to delete?');\" href='post_comments.php?delete=$comment_id&id=". $_GET['id'] ."'>Delete</a></td>";
 										echo "</tr>";
 									}
 									?>
@@ -87,21 +87,21 @@
 							$get_comment_id = $_GET['delete'];
 							$query = "DELETE FROM comments WHERE comment_id = {$get_comment_id}";
 							$delete_query = mysqli_query($connect, $query);
-							header("Location: comments.php");
+							header("Location: post_comments.php?id=" . $_GET['id']);
 						}
 
 						if(isset($_GET['unapprove'])) {
 							$get_comment_id = $_GET['unapprove'];
 							$query = "UPDATE comments SET comment_status = 'unapproved' WHERE comment_id = '{$get_comment_id}'";
 							$unaprove_query = mysqli_query($connect, $query);
-							header("Location: comments.php");
+							header("Location: post_comments.php?id=" . $_GET['id']);
 						}
 
 						if(isset($_GET['approve'])) {
 							$get_comment_id = $_GET['approve'];
 							$query = "UPDATE comments SET comment_status = 'approved' WHERE comment_id = '{$get_comment_id}'";
 							$aprove_query = mysqli_query($connect, $query);
-							header("Location: comments.php");
+							header("Location: post_comments.php?id=" . $_GET['id']);
 						}
 
 						?>
