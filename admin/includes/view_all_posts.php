@@ -33,12 +33,11 @@ if(isset($_POST['checkBoxArray'])) {
 					$post_image = $row['post_image']; 
 					$post_content = $row['post_content']; 
 					$post_tags = $row['post_tags']; 
-					$post_comment_count = $row['post_comment_count']; 
 					$post_status = $row['post_status']; 
 				}
 
-				$query = "INSERT INTO posts(post_category_id, post_title, post_author, post_date, post_image, post_content, post_tags,post_comment_count, post_status)";
-				$query .= "VALUES({$post_category_id},'{$post_title}','{$post_author}', '{$post_date}' ,'{$post_image}','{$post_content}','{$post_tags}', 0 ,'{$post_status}')";
+				$query = "INSERT INTO posts(post_category_id, post_title, post_author, post_date, post_image, post_content, post_tags, post_status)";
+				$query .= "VALUES({$post_category_id},'{$post_title}','{$post_author}', '{$post_date}' ,'{$post_image}','{$post_content}','{$post_tags}' ,'{$post_status}')";
 
 				$copy_query = mysqli_query($connect, $query);
 				if(!$copy_query) {
@@ -108,7 +107,6 @@ if(isset($_POST['checkBoxArray'])) {
 					$post_image = $row['post_image']; 
 					$post_content = $row['post_content']; 
 					$post_tags = $row['post_tags']; 
-					$post_comment_count = $row['post_comment_count']; 
 					$post_status = $row['post_status']; 
 					$post_view_count = $row['post_view_count']; 
 
@@ -133,7 +131,12 @@ if(isset($_POST['checkBoxArray'])) {
 					echo "<td><img src ='../images/{$post_image}' alt = 'images' width='200'></td>";
 					echo "<td>{$post_content}</td>";
 					echo "<td>{$post_tags}</td>";
-					echo "<td>{$post_comment_count}</td>";
+
+					$query = "SELECT * FROM comments WHERE comment_post_id = $post_id";
+					$send_query_comment = mysqli_query($connect, $query);
+					$count_comments = mysqli_num_rows($send_query_comment);
+					echo "<td>{$count_comments}</td>";
+
 					echo "<td>{$post_status}</td>";
 					echo "<td>{$post_view_count}</td>";
 					echo "<td><a href='../post.php?p_id={$post_id}'>View post</a></td>";
