@@ -5,9 +5,9 @@
 
 if(isset($_POST['submit'])) {
     if(!empty($_POST['subject']) && !empty($_POST['email']) && !empty($_POST['body'])) {
-        $subject = escape($_POST['subject']);
-        $body = escape($_POST['body']);
-		  $header = escape($_POST['email']);
+        $subject = $_POST['subject'];
+        $body = $_POST['body'];
+		  $header = "From: ". $_POST['email'];
 		  $to = "ivan0kosyakov@gmail.com";
 
 		  $retval = mail ($to,$subject,$body,$header);
