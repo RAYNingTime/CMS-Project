@@ -4,47 +4,14 @@
 <?php
 
 if(isset($_POST['submit'])) {
-    if(!empty($_POST['username']) && !empty($_POST['email']) && !empty($_POST['password'])) {
-        $username = $_POST['username'];
-        $email = $_POST['email'];
-        $password = $_POST['password'];
-        $firstname = $_POST['firstname'];
-        $lastname = $_POST['lastname'];
+    if(!empty($_POST['subject']) && !empty($_POST['email']) && !empty($_POST['body'])) {
+        $subject = escape($_POST['subject']);
+        $email = escape($_POST['email']);
+        $body = escape($_POST['body']);
 
-        $username = escape($username);
-        $email = escape($email);
-        $password = escape($password);
-        $firstname = escape($firstname);
-        $lastname = escape($lastname);
-
-        $password = password_hash($password, PASSWORD_BCRYPT, array('cost' => 12));
-
-        // OLD CRYPT
-        // $query = "SELECT user_randSalt FROM users";
-        // $select_randsalt_query = mysqli_query($connect, $query);
-        // if(!$select_randsalt_query) {
-        //     die("QUERY FAILED " . mysqli_error($connect));
-        // }
-
-        // $row = mysqli_fetch_assoc($select_randsalt_query);
-        // $randSalt = $row['user_randSalt'];
-        // $password = crypt($password, $randSalt);
-
-        $query = "INSERT INTO users (username, user_email, user_password, user_role, user_firstname, user_lastname) ";
-        $query .= "VALUES('{$username}', '{$email}', '{$password}', 'subscriber', '{$firstname}', '{$lastname}')";
-        $register_user_query = mysqli_query($connect, $query);
-
-        if(!$register_user_query) {
-            die("QUERY FAILED " . mysqli_error($connect)) . ' ' . mysqli_errno($connect);
-        }
-
-        header("Location: index.php");
-
-
-    } else {
-        // echo "<strong><p style='color:red;font-size:25px;' class='text-center'>You should fill all the fields!</p></strong>";
-        echo "<script>alert('Fields cannot be empty')</script>";
-    }
+		  $to = "ivan0kosyakov@gmail.com";
+    } else 
+        echo "<script>alert('Fields cannot be empty')</script>"; 
 }
 
 

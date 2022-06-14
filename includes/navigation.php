@@ -34,6 +34,8 @@
 						}
 						echo "<li><a href='admin'>Admin</a></li>";
 
+                        echo "<li><a href='contact.php'>Contact</a></li>";
+
 
                         if(!isset($_SESSION['username'])) {
                         echo "<li><a href='registration.php'>Registration</a></li>";
