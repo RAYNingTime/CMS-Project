@@ -11,11 +11,11 @@ if(isset($_POST['submit'])) {
         $firstname = $_POST['firstname'];
         $lastname = $_POST['lastname'];
 
-        $username = mysqli_real_escape_string($connect, $username);
-        $email = mysqli_real_escape_string($connect, $email);
-        $password = mysqli_real_escape_string($connect, $password);
-        $firstname = mysqli_real_escape_string($connect, $firstname);
-        $lastname = mysqli_real_escape_string($connect, $lastname);
+        $username = escape($username);
+        $email = escape($email);
+        $password = escape($password);
+        $firstname = escape($firstname);
+        $lastname = escape($lastname);
 
         $password = password_hash($password, PASSWORD_BCRYPT, array('cost' => 12));
 

@@ -2,7 +2,7 @@
 
 if(isset($_POST['checkBoxArray'])) {
 	foreach($_POST['checkBoxArray'] as $checkBoxValue){
-		$bulk_options = $_POST['bulk_option'];
+		$bulk_options = escape($_POST['bulk_option']);
 
 		switch($bulk_options) {
 			case 'published': {
@@ -168,18 +168,19 @@ if(isset($_POST['checkBoxArray'])) {
 </form>
 
 <?php 
+if(isset($_SESSION['user_role']) && $_SESSION['user_role'] == 'admin') {
+	if(isset($_GET['delete'])) {
+		$get_post_id = escape($_GET['delete']);
+		$query = "DELETE FROM posts WHERE post_id = {$get_post_id}";
+		$delete_query = mysqli_query($connect, $query);
+		header("Location: posts.php");
+	}
 
-if(isset($_GET['delete'])) {
-	$get_post_id = $_GET['delete'];
-	$query = "DELETE FROM posts WHERE post_id = {$get_post_id}";
-	$delete_query = mysqli_query($connect, $query);
-	header("Location: posts.php");
-}
-
-if(isset($_GET['reset_views'])) {
-	$get_post_id = $_GET['reset_views'];
-	$query = "UPDATE posts SET post_view_count=0 WHERE post_id = {$get_post_id}";
-	$reset_views_query = mysqli_query($connect, $query);
-	header("Location: posts.php");
+	if(isset($_GET['reset_views'])) {
+		$get_post_id = escape($_GET['reset_views']);
+		$query = "UPDATE posts SET post_view_count=0 WHERE post_id = {$get_post_id}";
+		$reset_views_query = mysqli_query($connect, $query);
+		header("Location: posts.php");
+	}
 }
 ?>

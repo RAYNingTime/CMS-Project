@@ -1,6 +1,6 @@
 <?php
 	if(isset($_GET['edit_user'])){
-		$the_user_id = $_GET['edit_user'];
+		$the_user_id = escape($_GET['edit_user']);
 
 		$query = "SELECT * FROM users WHERE user_id = $the_user_id";
 		$select_users_query = mysqli_query($connect, $query);
@@ -17,8 +17,8 @@
 		$user_role = $row['user_role'];
 
 
-	if (isset($_POST['edit_user'])) {
-		if (!empty($_POST['user_old_password']) && !empty($_POST['user_new_password'])) {
+	if (isset(escape($_POST['edit_user']))) {
+		if (!empty(escape($_POST['user_old_password'])) && !empty(escape($_POST['user_new_password']))) {
 
 		// OLD ENCRYPTING SYSTEM
 		// $query = "SELECT user_randSalt FROM users";
@@ -30,16 +30,16 @@
 		// $salt = $row['user_randSalt'];
 
 
-		$old_password = $_POST['user_old_password'];
+		$old_password = escape($_POST['user_old_password']);
 		$hashed_new_password =  password_hash($_POST['user_new_password'], PASSWORD_BCRYPT, array('cost' => 10));
 
 		if (password_verify($old_password, $user_password)) {
-			$user_firstname = $_POST['user_firstname'];
-			$user_lastname = $_POST['user_lastname'];
-			$user_role = $_POST['user_role'];
-			$username = $_POST['username'];
-			$user_email = $_POST['user_email'];
-			$user_password = $_POST['user_new_password'];
+			$user_firstname = escape($_POST['user_firstname']);
+			$user_lastname = escape($_POST['user_lastname']);
+			$user_role = escape($_POST['user_role']);
+			$username = escape($_POST['username']);
+			$user_email = escape($_POST['user_email']);
+			$user_password = escape($_POST['user_new_password']);
 	
 			$query = "UPDATE users SET ";
 			$query .="user_firstname = '{$user_firstname}', ";

@@ -22,11 +22,11 @@ if(isset($_SESSION['username'])) {
 }
 
 if (isset($_POST['edit_user'])) {
-	$user_firstname = $_POST['user_firstname'];
-	$user_lastname = $_POST['user_lastname'];
-	$username = $_POST['username'];
-	$user_email = $_POST['user_email'];
-	$user_password = $_POST['user_password'];
+	$user_firstname = escape($_POST['user_firstname']);
+	$user_lastname = escape($_POST['user_lastname']);
+	$username = escape($_POST['username']);
+	$user_email = escape($_POST['user_email']);
+	$user_password = escape($_POST['user_password']);
 
 	$query = "UPDATE users SET ";
 	$query .="user_firstname = '{$user_firstname}', ";

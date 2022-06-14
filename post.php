@@ -18,7 +18,7 @@
         <?php
 
         if(isset($_GET['p_id'])){
-            $the_post_id = $_GET['p_id'];
+            $the_post_id = escape($_GET['p_id']);
 
             $view_query = "UPDATE posts SET post_view_count = post_view_count + 1 WHERE post_id = {$the_post_id}";
             $send_query = mysqli_query($connect, $view_query);
@@ -60,11 +60,11 @@
         <?php
         if(isset($_POST['create_comment'])){
             if(!empty($_POST['comment_author']) && !empty($_POST['comment_email']) && !empty($_POST['comment_content'])) {
-                $the_post_id = $_GET['p_id'];
+                $the_post_id = escape($_GET['p_id']);
 
-                $comment_author = $_POST['comment_author'];
-                $comment_email = $_POST['comment_email'];
-                $comment_content = $_POST['comment_content'];
+                $comment_author = escape($_POST['comment_author']);
+                $comment_email = escape($_POST['comment_email']);
+                $comment_content = escape($_POST['comment_content']);
     
                 $query = "INSERT INTO comments (comment_post_id, comment_author, comment_email, comment_content, comment_status, comment_date)";
                 $query .= "VALUES ($the_post_id, '{$comment_author}', '{$comment_email}', '{$comment_content}', 'unapproved', now())";

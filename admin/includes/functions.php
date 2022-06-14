@@ -1,4 +1,11 @@
 <?php
+
+function escape($string) {
+	global $connect;
+
+	return mysqli_real_escape_string($connect, trim($string));
+}
+
 function users_online(){
 
 	if(isset($_GET['onlineusers'])) {
@@ -35,8 +42,8 @@ function users_online(){
 
 function insertCategories(){
 	global $connect;
-	if (isset($_POST['submit'])) {
-		$cat_title = $_POST['cat_title'];
+	if (isset(escape($_POST['submit']))) {
+		$cat_title = escape($_POST['cat_title']);
 
 		if ($cat_title == "" || empty($cat_title)){
 			echo "This field should not be empty!";
@@ -71,7 +78,7 @@ function deleteCategories(){
 	global $connect;
 	
 	if (isset($_GET['delete'])) {
-		$get_cat_id = $_GET['delete'];
+		$get_cat_id = escape($_GET['delete']);
 		$query = "DELETE FROM categories WHERE cat_id = {$get_cat_id}";
 		$delete_query = mysqli_query($connect, $query);
 		header("Location: categories.php");
