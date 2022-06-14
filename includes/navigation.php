@@ -1,5 +1,6 @@
 <?php include "db.php";?>
 <?php include "header.php";?>
+<?php include "admin/includes/functions.php";?>
 <?php session_start();?>
 
 <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
@@ -34,7 +35,8 @@
 						}
 						echo "<li><a href='admin'>Admin</a></li>";
 
-                        echo "<li><a href='contact.php'>Contact</a></li>";
+                        // Only Hosting feature
+                        // echo "<li><a href='contact.php'>Contact</a></li>";
 
 
                         if(!isset($_SESSION['username'])) {

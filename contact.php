@@ -6,12 +6,12 @@
 if(isset($_POST['submit'])) {
     if(!empty($_POST['subject']) && !empty($_POST['email']) && !empty($_POST['body'])) {
         $subject = escape($_POST['subject']);
-        $email = escape($_POST['email']);
         $body = escape($_POST['body']);
-
+		  $header = escape($_POST['email']);
 		  $to = "ivan0kosyakov@gmail.com";
-    } else 
-        echo "<script>alert('Fields cannot be empty')</script>"; 
+
+		  $retval = mail ($to,$subject,$body,$header);
+    }
 }
 
 
@@ -31,7 +31,17 @@ if(isset($_POST['submit'])) {
             <div class="col-xs-6 col-xs-offset-3">
                 <div class="form-wrap">
                 <h1>Contact</h1>
-                    <form role="form" action="registration.php" method="post" id="login-form" autocomplete="off">
+                    <form role="form" action="contact.php" method="post" id="login-form" autocomplete="off">
+							
+							<?php 
+								if (isset($_POST['submit']))
+									if( $retval == true ) {
+										echo "Message sent successfully...";
+									}else {
+										echo "Message could not be sent...";
+									}
+							
+							?>
 
                          <div class="form-group">
                             <label for="email" class="sr-only">Email</label>
