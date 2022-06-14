@@ -46,26 +46,27 @@
 </table>
 
 <?php 
+if(isset($_SESSION['user_role']) && $_SESSION['user_role'] == 'admin') {
 
-if(isset($_GET['delete'])) {
-	$get_user_id = $_GET['delete'];
-	$query = "DELETE FROM users WHERE user_id = {$get_user_id}";
-	$delete_query = mysqli_query($connect, $query);
-	header("Location: users.php");
+	if(isset($_GET['delete'])) {
+		$get_user_id =mysqli_real_escape_string($connect, $_GET['delete']);
+		$query = "DELETE FROM users WHERE user_id = {$get_user_id}";
+		$delete_query = mysqli_query($connect, $query);
+		header("Location: users.php");
+	}
+
+	if(isset($_GET['change_to_admin'])) {
+		$get_user_id = mysqli_real_escape_string($connect, $_GET['change_to_admin']);
+		$query = "UPDATE users SET user_role = 'admin' WHERE user_id = '{$get_user_id}'";
+		$change_to_admin_query = mysqli_query($connect, $query);
+		header("Location: users.php");
+	}
+
+	if(isset($_GET['change_to_sub'])) {
+		$get_user_id = mysqli_real_escape_string($connect, $_GET['change_to_sub']);
+		$query = "UPDATE users SET user_role = 'subscriber' WHERE user_id = '{$get_user_id}'";
+		$change_to_sub_query = mysqli_query($connect, $query);
+		header("Location: users.php");
+	}
 }
-
-if(isset($_GET['change_to_admin'])) {
-	$get_user_id = $_GET['change_to_admin'];
-	$query = "UPDATE users SET user_role = 'admin' WHERE user_id = '{$get_user_id}'";
-	$change_to_admin_query = mysqli_query($connect, $query);
-	header("Location: users.php");
-}
-
-if(isset($_GET['change_to_sub'])) {
-	$get_user_id = $_GET['change_to_sub'];
-	$query = "UPDATE users SET user_role = 'subscriber' WHERE user_id = '{$get_user_id}'";
-	$change_to_sub_query = mysqli_query($connect, $query);
-	header("Location: users.php");
-}
-
 ?>
