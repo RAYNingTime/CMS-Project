@@ -42,7 +42,7 @@ function users_online(){
 
 function insertCategories(){
 	global $connect;
-	if (isset(escape($_POST['submit']))) {
+	if (isset($_POST['submit'])) {
 		$cat_title = escape($_POST['cat_title']);
 
 		if ($cat_title == "" || empty($cat_title)){
