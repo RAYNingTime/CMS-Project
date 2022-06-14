@@ -36,7 +36,7 @@
 	</div>
 
 	<div class="form-group">
-	<label for="title">Post Category</label>
+	<label for="category">Post Category</label>
 		<select name="post_category" id="">
 			<?php
 				$query = "SELECT * FROM categories";
@@ -57,8 +57,24 @@
 	</div>
 
 	<div class="form-group">
-		<label for="title">Post Author</label>
-		<input type="text" class="form-control" name="author">
+	<label for="users">Users</label>
+		<select name="users" id="">
+			<?php
+				$query = "SELECT * FROM users";
+				$select_users = mysqli_query($connect, $query);
+
+				if(!$select_users){
+					die("QUERY FAILED " . mysqli_error($connect));
+				}
+
+				while($row = mysqli_fetch_assoc($select_users)) {
+					$user_id = $row['user_id'];
+					$username = $row['username'];
+					
+					echo "<option value='{$user_id}'>$username</option>";
+				}
+			?>
+		</select>
 	</div>
 
 
