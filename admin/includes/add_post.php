@@ -68,10 +68,9 @@
 				}
 
 				while($row = mysqli_fetch_assoc($select_users)) {
-					$user_id = $row['user_id'];
 					$username = $row['username'];
 					
-					echo "<option value='{$user_id}'>$username</option>";
+					echo "<option value='{$username}'>$username</option>";
 				}
 			?>
 		</select>

@@ -77,7 +77,7 @@ if(isset($_POST['checkBoxArray'])) {
 				<th>ID</th>
 				<th>Category</th>
 				<th>Title</th>
-				<th>Author</th>
+				<th>User</th>
 				<th>Date</th>
 				<th>Image</th>
 				<th>Content</th>
@@ -95,7 +95,7 @@ if(isset($_POST['checkBoxArray'])) {
 			<tr>
 
 				<?php
-				$query = "SELECT * FROM posts";
+				$query = "SELECT * FROM posts ORDER BY post_id DESC";
 				$select_posts = mysqli_query($connect, $query);
 			
 				while($row = mysqli_fetch_assoc($select_posts)) {
@@ -128,9 +128,9 @@ if(isset($_POST['checkBoxArray'])) {
 
 					echo "<td>{$post_title}</td>";
 
-					if(isset($post_author) || !empty($post_author)) {
+					if(!empty($post_author)) {
 						echo "<td>{$post_author}</td>";
-					} else if (isset($post_user) || !empty($post_user)) {
+					} else if (!empty($post_user)) {
 						echo "<td>{$post_user}</td>";
 					}
 					
