@@ -1,5 +1,7 @@
 <?php
 
+include("delete_modal.php");
+
 if(isset($_POST['checkBoxArray'])) {
 	foreach($_POST['checkBoxArray'] as $checkBoxValue){
 		$bulk_options = escape($_POST['bulk_option']);
@@ -158,7 +160,8 @@ if(isset($_POST['checkBoxArray'])) {
 					echo "<td><a href='../post.php?p_id={$post_id}'>View post</a></td>";
 					echo "<td><a href='posts.php?source=edit_post&p_id={$post_id}'>Edit</a></td>";
 					echo "<td><a onClick=\"javascript: return confirm('Are you sure you reset views on this post?');\" href='posts.php?reset_views={$post_id}'>Reset Views</a></td>";
-					echo "<td><a onClick=\"javascript: return confirm('Are you sure you want to delete?');\" href='posts.php?delete={$post_id}'>Delete</a></td>";
+					// echo "<td><a onClick=\"javascript: return confirm('Are you sure you want to delete?');\" href='posts.php?delete={$post_id}'>Delete</a></td>";
+					echo "<td><a rel='$post_id' href='' class='delete_link' >Delete</a></td>";
 					echo "</tr>";
 				}
 				?>
@@ -184,3 +187,12 @@ if(isset($_SESSION['user_role']) && $_SESSION['user_role'] == 'admin') {
 	}
 }
 ?>
+
+<script>
+	$(document).ready(function(){
+		$(".delete_link").on('click', function(){
+			var id =$(this).attr("rel");
+			alert(id);
+		});
+	});
+</script>
