@@ -161,7 +161,7 @@ if(isset($_POST['checkBoxArray'])) {
 					echo "<td><a href='posts.php?source=edit_post&p_id={$post_id}'>Edit</a></td>";
 					echo "<td><a onClick=\"javascript: return confirm('Are you sure you reset views on this post?');\" href='posts.php?reset_views={$post_id}'>Reset Views</a></td>";
 					// echo "<td><a onClick=\"javascript: return confirm('Are you sure you want to delete?');\" href='posts.php?delete={$post_id}'>Delete</a></td>";
-					echo "<td><a rel='$post_id' href='' class='delete_link' >Delete</a></td>";
+					echo "<td><a rel='$post_id' href='javascript:void(0)' class='delete_link'>Delete</a></td>";
 					echo "</tr>";
 				}
 				?>
@@ -170,29 +170,34 @@ if(isset($_POST['checkBoxArray'])) {
 	</table>
 </form>
 
-<?php 
-if(isset($_SESSION['user_role']) && $_SESSION['user_role'] == 'admin') {
-	if(isset($_GET['delete'])) {
-		$get_post_id = escape($_GET['delete']);
-		$query = "DELETE FROM posts WHERE post_id = {$get_post_id}";
-		$delete_query = mysqli_query($connect, $query);
-		header("Location: posts.php");
-	}
-
-	if(isset($_GET['reset_views'])) {
-		$get_post_id = escape($_GET['reset_views']);
-		$query = "UPDATE posts SET post_view_count=0 WHERE post_id = {$get_post_id}";
-		$reset_views_query = mysqli_query($connect, $query);
-		header("Location: posts.php");
-	}
-}
-?>
 
 <script>
 	$(document).ready(function(){
 		$(".delete_link").on('click', function(){
-			var id =$(this).attr("rel");
-			alert(id);
+			var id = $(this).attr("rel");
+			var delete_url = "posts.php?delete=" + id;
+			$(".modal_delete_link").attr("href", delete_url);
+
+			$("#exampleModal").modal('show');
 		});
 	});
 </script>
+
+<?php 
+
+if(isset($_GET['delete'])) {
+	$get_post_id = escape($_GET['delete']);
+	$query = "DELETE FROM posts WHERE post_id = {$get_post_id}";
+	$delete_query = mysqli_query($connect, $query);
+	header("Location: posts.php");
+}
+
+if(isset($_GET['reset_views'])) {
+	$get_post_id = escape($_GET['reset_views']);
+	$query = "UPDATE posts SET post_view_count=0 WHERE post_id = {$get_post_id}";
+	$reset_views_query = mysqli_query($connect, $query);
+	header("Location: posts.php");
+}
+
+?>
+
