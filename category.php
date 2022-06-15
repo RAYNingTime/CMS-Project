@@ -23,8 +23,10 @@
                 $query = "SELECT * FROM posts WHERE post_category_id = {$post_category_id} AND post_status = 'published'";
                 $select_all_posts_query = mysqli_query($connect, $query);
                 
-                if(mysqli_num_rows($select_all_posts_query) < 1)
-                    echo "<h1 class='text-center'>No posts available</h1>";
+                if(mysqli_num_rows($select_all_posts_query) < 1) {
+                    echo "</br></br><h4 class='text-center'>Currently, there are no posts.</h4>";
+                    echo "<strong><p style='color:grey;' class='text-center'>Return later.</p></strong>";
+                }
                 else {
 
                 while($row = mysqli_fetch_assoc($select_all_posts_query)) {

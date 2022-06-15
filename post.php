@@ -12,8 +12,7 @@
         <!-- Blog Entries Column -->
         <div class="col-md-8">
             <h1 class="page-header">
-                Page Heading
-                <small>Secondary Text</small>
+                Posts
             </h1>
         <?php
 
@@ -23,8 +22,22 @@
             $view_query = "UPDATE posts SET post_view_count = post_view_count + 1 WHERE post_id = {$the_post_id}";
             $send_query = mysqli_query($connect, $view_query);
         
-            $query = "SELECT * FROM posts WHERE post_id = $the_post_id";
+            
+
+
+            if(isset($_SESSION['user_role']) && $_SESSION['user_role'] == 'admin'){
+                $query = "SELECT * FROM posts WHERE post_id = $the_post_id";
+            } else
+                $query = "SELECT * FROM posts WHERE post_id = $the_post_id AND 'post_status' = 'published'";
+
             $select_all_posts_query = mysqli_query($connect, $query);
+
+            if(mysqli_num_rows($select_all_posts_query) < 1) {
+                echo "</br></br><h4 class='text-center'>Currently, there are no posts.</h4>";
+                echo "<strong><p style='color:grey;' class='text-center'>Return later.</p></strong>";
+            }
+        else {
+
 
             while($row = mysqli_fetch_assoc($select_all_posts_query)) {
                 $post_title = $row['post_title'];
@@ -50,8 +63,6 @@
             <p><?php echo $post_content;?></p>
             <hr>
         <?php
-        }} else {
-            header("Location: index.php");
         }
         ?>
 
@@ -137,7 +148,7 @@
                     <!-- Comment -->
         <div class="media">
             <a class="pull-left" href="#">
-                <img class="media-object" width = 64 src="https://44.media.tumblr.com/276eeec6ab6ee2dce7373580e5ffa35c/tumblr_n2fx9yLS411tvfpg9o1_500.gif" alt="">
+                <img class="media-object" width = "64" src="https://44.media.tumblr.com/276eeec6ab6ee2dce7373580e5ffa35c/tumblr_n2fx9yLS411tvfpg9o1_500.gif" alt="">
             </a>
             <div class="media-body">
                 <h4 class="media-heading"><?php echo $comment_author;?>
@@ -148,7 +159,9 @@
         </div>
 
 
-        <?php } ?>
+        <?php }}} else {
+            header("Location: index.php");
+        } ?>
 
 
 
