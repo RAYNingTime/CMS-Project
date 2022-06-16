@@ -33,7 +33,6 @@
                     echo "<strong><p style='color:grey;' class='text-center'>Return later.</p></strong>";
                 }
                 else {
-
                 while($row = mysqli_fetch_assoc($select_all_posts_query)) {
                     $post_id = $row['post_id'];
                     $post_title = $row['post_title'];
