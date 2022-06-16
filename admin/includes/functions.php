@@ -38,8 +38,6 @@ function users_online(){
 	}
 }
 
-
-
 function insertCategories(){
 	global $connect;
 	if (isset($_POST['submit'])) {
