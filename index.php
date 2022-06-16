@@ -63,7 +63,7 @@
                     $post_content = substr($row['post_content'],0,200);
                     $post_status = $row['post_status'];
 
-                    if($post_status == 'published' || $_SESSION['user_role'] == 'admin') {
+                    if($post_status == 'published' || ($_SESSION['user_role'] == 'admin' && $post_status == 'draft')) {
                         $posted = TRUE;
             ?>
                 <!-- First Blog Post -->
