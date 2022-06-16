@@ -95,6 +95,23 @@ function deleteCategories(){
 	}
 }
 
+
+function recordCount($table){
+	global $connect;
+
+	$query = "SELECT * FROM " . $table;
+   $select_all = mysqli_query($connect, $query);
+	$result = mysqli_num_rows($select_all);
+
+	if(!$result) {
+		die("QUERY FAILED " . mysqli_error($connect));
+	}
+
+	return $result;
+}
 ?>
+
+
+
 
 <?php users_online();?>
