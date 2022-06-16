@@ -31,20 +31,25 @@
                     $page_1 = ($page * PER_PAGE) - PER_PAGE;
                 }
 
-
-                if(isset($_SESSION['user_role']) && $_SESSION['user_role'] == 'admin'){
+                if(isset($_SESSION['user_role']) && $_SESSION['user_role'] == 'admin')
                     $query = "SELECT * FROM posts";
-                } else
+                else 
                     $query = "SELECT * FROM posts WHERE 'post_status' = 'published'";
+                    
+                
 
-                $find_count = mysqli_query($connect,$post_query_count);
+                $find_count = mysqli_query($connect,$query);
                 $count = mysqli_num_rows($find_count);
                 $count = ceil($count/PER_PAGE);
-
                 $per_page = PER_PAGE;
 
-                $query = "SELECT * FROM posts LIMIT $page_1, $per_page";
-                $select_all_posts_query = mysqli_query($connect, $query);
+                if(isset($_SESSION['user_role']) && $_SESSION['user_role'] == 'admin')
+                    $query_per_page = "SELECT * FROM posts LIMIT $page_1, $per_page";
+                else 
+                    $query_per_page = "SELECT * FROM posts WHERE 'post_status' = 'published' LIMIT $page_1, $per_page";
+
+
+                $select_all_posts_query = mysqli_query($connect, $query_per_page);
 
 
                 $posted = FALSE;
@@ -58,7 +63,7 @@
                     $post_content = substr($row['post_content'],0,200);
                     $post_status = $row['post_status'];
 
-                    if($post_status == 'published') {
+                    if($post_status == 'published' || $_SESSION['user_role'] == 'admin') {
                         $posted = TRUE;
             ?>
                 <!-- First Blog Post -->
