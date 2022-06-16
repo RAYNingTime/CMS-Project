@@ -100,7 +100,7 @@ if(isset($_POST['checkBoxArray'])) {
 				// $query = "SELECT * FROM posts ORDER BY post_id DESC";
 
 				$query = "SELECT posts.post_id, posts.post_category_id, posts.post_title, posts.post_author, posts.post_user, posts.post_date, posts.post_image, posts.post_content, posts.post_tags, posts.post_status, posts.post_view_count, ";
-				$query .= "categories.cat_id, categories.cat_title FROM posts LEFT JOIN categories ON posts.post_category_id = categories.cat_id";
+				$query .= "categories.cat_id, categories.cat_title FROM posts LEFT JOIN categories ON posts.post_category_id = categories.cat_id ORDER BY posts.post_id DESC";
 				$select_posts = mysqli_query($connect, $query);
 			
 				while($row = mysqli_fetch_assoc($select_posts)) {
@@ -114,7 +114,8 @@ if(isset($_POST['checkBoxArray'])) {
 					$post_content = $row['post_content']; 
 					$post_tags = $row['post_tags']; 
 					$post_status = $row['post_status']; 
-					$post_view_count = $row['post_view_count']; 
+					$post_view_count = $row['post_view_count'];
+					$cat_title = $row['cat_title']; 
 
 					echo "<tr>"; ?>
 
@@ -123,11 +124,11 @@ if(isset($_POST['checkBoxArray'])) {
 					<?php 
 					echo "<td>{$post_id}</td>";
 					
-					$query = "SELECT * FROM categories WHERE cat_id = {$post_category_id}";
-					$select_categories_id = mysqli_query($connect, $query);
+					// $query = "SELECT * FROM categories WHERE cat_id = {$post_category_id}";
+					// $select_categories_id = mysqli_query($connect, $query);
 
-					$row = mysqli_fetch_assoc($select_categories_id);
-					$cat_title = $row['cat_title'];
+					// $row = mysqli_fetch_assoc($select_categories_id);
+					// $cat_title = $row['cat_title'];
 
 					echo "<td>{$cat_title}</td>";
 
