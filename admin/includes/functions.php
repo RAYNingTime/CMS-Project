@@ -58,7 +58,6 @@ function insertCategories(){
 					$already_taken = true;
 				}
 			}
-
 			if($already_taken == false) {
 			$query = "INSERT INTO categories(cat_title) VALUES ('{$cat_title}')";
 
