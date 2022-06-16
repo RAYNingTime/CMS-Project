@@ -103,7 +103,21 @@ function recordCount($table){
    $select_all = mysqli_query($connect, $query);
 	$result = mysqli_num_rows($select_all);
 
-	if(!$result) {
+	if(!$select_all) {
+		die("QUERY FAILED " . mysqli_error($connect));
+	}
+
+	return $result;
+}
+
+function checkStatus($table, $column, $value){
+	global $connect;
+
+	$query = "SELECT * FROM $table WHERE $column = '$value'";
+	$select_all = mysqli_query($connect, $query);
+	$result = mysqli_num_rows($select_all);
+
+	if(!$select_all) {
 		die("QUERY FAILED " . mysqli_error($connect));
 	}
 
