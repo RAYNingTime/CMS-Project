@@ -45,15 +45,28 @@ function insertCategories(){
 	if (isset($_POST['submit'])) {
 		$cat_title = escape($_POST['cat_title']);
 
+		$query = "SELECT DISTINCT cat_title FROM categories";
+		$all_cat_titles = mysqli_query($connect, $query);
+
 		if ($cat_title == "" || empty($cat_title)){
 			echo "This field should not be empty!";
-		} else {
+		} else { 
+			$already_taken = false;
+			while($row = mysqli_fetch_assoc($all_cat_titles)) {
+				$check_title = $row['cat_title'];
+				if($cat_title == $check_title) {
+					$already_taken = true;
+				}
+			}
+
+			if($already_taken == false) {
 			$query = "INSERT INTO categories(cat_title) VALUES ('{$cat_title}')";
 
 			$create_category = mysqli_query($connect , $query);
 
 			if (!$create_category)
 				die('QUERY FAILED'. mysqli_error($connect));
+			} else echo "This category name already taken!";
 		}
 	 }
 }
