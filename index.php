@@ -34,21 +34,21 @@
                 if(isset($_SESSION['user_role']) && $_SESSION['user_role'] == 'admin')
                     $query = "SELECT * FROM posts";
                 else 
-                    $query = "SELECT * FROM posts WHERE 'post_status' = 'published'";
+                    $query = "SELECT * FROM posts WHERE post_status = 'published'";
                     
                 
 
                 $find_count = mysqli_query($connect,$query);
                 $count = mysqli_num_rows($find_count);
+                
                 $count = ceil($count/PER_PAGE);
                 $per_page = PER_PAGE;
 
                 if(isset($_SESSION['user_role']) && $_SESSION['user_role'] == 'admin')
                     $query_per_page = "SELECT * FROM posts LIMIT $page_1, $per_page";
                 else 
-                    $query_per_page = "SELECT * FROM posts WHERE 'post_status' = 'published' LIMIT $page_1, $per_page";
-
-
+                    $query_per_page = "SELECT * FROM posts WHERE post_status = 'published' LIMIT $page_1, $per_page";
+                    
                 $select_all_posts_query = mysqli_query($connect, $query_per_page);
 
 

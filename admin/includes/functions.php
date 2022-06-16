@@ -123,6 +123,23 @@ function checkStatus($table, $column, $value){
 
 	return $result;
 }
+
+function is_admin($username = ''){
+	global $connect;
+
+	$query = "SELECT user_role FROM users WHERE username = '{$username}'";
+	$result = mysqli_query($connect, $query);
+
+	if(!$result) 
+		die("QUERY FAILED " . mysqli_error($connect));
+
+	$row = mysqli_fetch_array($result);
+
+	if($row['user_role'] == 'admin')
+		return true;
+	
+	return false;
+}
 ?>
 
 
