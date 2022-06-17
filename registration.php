@@ -11,22 +11,12 @@ if(isset($_POST['submit'])) {
     $firstname = escape($_POST['firstname']);
     $lastname = escape($_POST['lastname']);
 
-    $error = [
-        'username' => '',
-        'firstname' => '',
-        'lastname' => '',
-        'email' => '',
-        'password' => ''
-    ];
-
-
-    } else if(strlen($username) < 4) {
-        $error['username'] = 'Username needs to be longer!';
-    }
-
-
-
     $message = register_user($username, $email, $password, $firstname, $lastname);
+
+    if (empty($message) {
+        login_user($username, $password);
+        header("Location: index.php");
+    }
 }
 
 
