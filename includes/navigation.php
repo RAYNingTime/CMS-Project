@@ -15,7 +15,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="./index">CMS Front</a>
+                <a class="navbar-brand" href="/cms/index">CMS Front</a>
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
 
@@ -47,14 +47,14 @@
 
 							echo "<li class='{$category_class}'><a href='category.php?category=$cat_id'>{$cat_title}</a></li>";
 						}
-						echo "<li><a href='admin'>Admin</a></li>";
 
-
-
+                    
                         // Only Hosting feature
                         // echo "<li><a href='contact.php'>Contact</a></li>";
 
 
+                        if(isset($_SESSION['username']))
+						    echo "<li><a href='admin'>Admin</a></li>";
                         if(!isset($_SESSION['username'])) {
                         echo "<li class='{$registration_class}'><a href='registration.php'>Registration</a></li>";
                         }
