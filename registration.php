@@ -13,7 +13,7 @@ if(isset($_POST['submit'])) {
 
     $message = register_user($username, $email, $password, $firstname, $lastname);
 
-    if (empty($message) {
+    if (empty($message)) {
         login_user($username, $password);
         header("Location: index.php");
     }
@@ -40,19 +40,23 @@ if(isset($_POST['submit'])) {
                         <?php if (!empty($message)) echo $message;?>
                         <div class="form-group">
                             <label for="username" class="sr-only">username</label>
-                            <input type="text" name="username" id="username" class="form-control" placeholder="Enter Desired Username">
+                            <input type="text" name="username" id="username" class="form-control" placeholder="Enter Desired Username" 
+                            autocomplete = "on" value = <?php echo isset($username) ? $username : ''; ?> >
                         </div>
                         <div class="form-group">
                             <label for="firstname" class="sr-only">firstname</label>
-                            <input type="text" name="firstname" id="firstname" class="form-control" placeholder="Enter Firstname">
+                            <input type="text" name="firstname" id="firstname" class="form-control" placeholder="Enter Firstname"
+                            autocomplete = "on" value = <?php echo isset($firstname) ? $firstname : ''; ?> >
                         </div>
                         <div class="form-group">
                             <label for="lastname" class="sr-only">lastname</label>
-                            <input type="text" name="lastname" id="lastname" class="form-control" placeholder="Enter Lastname">
+                            <input type="text" name="lastname" id="lastname" class="form-control" placeholder="Enter Lastname" 
+                            autocomplete = "on" value = <?php echo isset($lastname) ? $lastname : ''; ?> >
                         </div>
                          <div class="form-group">
                             <label for="email" class="sr-only">Email</label>
-                            <input type="email" name="email" id="email" class="form-control" placeholder="somebody@example.com">
+                            <input type="email" name="email" id="email" class="form-control" placeholder="somebody@example.com" 
+                            autocomplete = "on" value = <?php echo isset($email) ? $email : ''; ?> >
                         </div>
                          <div class="form-group">
                             <label for="password" class="sr-only">Password</label>
