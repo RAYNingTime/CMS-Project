@@ -5,6 +5,7 @@
 
 if(isset($_POST['submit'])) {
     if(!empty($_POST['username']) && !empty($_POST['email']) && !empty($_POST['password'])) {
+        if (!usernameExists($_POST['username'])) {
         $username = $_POST['username'];
         $email = $_POST['email'];
         $password = $_POST['password'];
@@ -37,13 +38,14 @@ if(isset($_POST['submit'])) {
         if(!$register_user_query) {
             die("QUERY FAILED " . mysqli_error($connect)) . ' ' . mysqli_errno($connect);
         }
-
+        
         header("Location: index.php");
 
+    } else $message = "<strong><p style='color:red;font-size:25px;' class='text-center'>This username already taken!</p></strong>";
 
     } else {
         // echo "<strong><p style='color:red;font-size:25px;' class='text-center'>You should fill all the fields!</p></strong>";
-        echo "<script>alert('Fields cannot be empty')</script>";
+        $message = "<strong><p style='color:red;font-size:25px;' class='text-center'>You should fill all the fields!</p></strong>";
     }
 }
 
@@ -65,6 +67,7 @@ if(isset($_POST['submit'])) {
                 <div class="form-wrap">
                 <h1>Register</h1>
                     <form role="form" action="registration.php" method="post" id="login-form" autocomplete="off">
+                        <?php if (!empty($message)) echo $message;?>
                         <div class="form-group">
                             <label for="username" class="sr-only">username</label>
                             <input type="text" name="username" id="username" class="form-control" placeholder="Enter Desired Username">

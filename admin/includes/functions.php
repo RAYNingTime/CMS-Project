@@ -124,7 +124,7 @@ function checkStatus($table, $column, $value){
 	return $result;
 }
 
-function is_admin($username = ''){
+function is_admin($username){
 	global $connect;
 
 	$query = "SELECT user_role FROM users WHERE username = '{$username}'";
@@ -140,6 +140,23 @@ function is_admin($username = ''){
 	
 	return false;
 }
+
+function usernameExists($username) {
+	global $connect;
+
+	$query = "SELECT username FROM users WHERE username = '{$username}'";
+	$result = mysqli_query($connect, $query);
+
+	if(!$result) 
+		die("QUERY FAILED " . mysqli_error($connect));
+
+	if(mysqli_num_rows($result) > 0) {
+		return true;
+	}
+
+	return false;
+}
+
 ?>
 
 
