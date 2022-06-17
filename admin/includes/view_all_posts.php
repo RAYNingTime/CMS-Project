@@ -111,7 +111,12 @@ if(isset($_POST['checkBoxArray'])) {
 					$post_user = $row['post_user'];
 					$post_date = $row['post_date']; 
 					$post_image = $row['post_image']; 
-					$post_content = $row['post_content']; 
+
+					if (strlen($row['post_content']) > 150)
+						$post_content = substr($row['post_content'],0,150) . "..."; 
+					else 
+						$post_content = substr($row['post_content'],0,150);
+
 					$post_tags = $row['post_tags']; 
 					$post_status = $row['post_status']; 
 					$post_view_count = $row['post_view_count'];
@@ -161,11 +166,26 @@ if(isset($_POST['checkBoxArray'])) {
 
 					echo "<td>{$post_status}</td>";
 					echo "<td>{$post_view_count}</td>";
-					echo "<td><a href='../post.php?p_id={$post_id}'>View post</a></td>";
-					echo "<td><a href='posts.php?source=edit_post&p_id={$post_id}'>Edit</a></td>";
-					echo "<td><a onClick=\"javascript: return confirm('Are you sure you reset views on this post?');\" href='posts.php?reset_views={$post_id}'>Reset Views</a></td>";
+					echo "<td><a class='btn btn-primary' href='../post.php?p_id={$post_id}'>View post</a></td>";
+					echo "<td><a class='btn btn-info' href='posts.php?source=edit_post&p_id={$post_id}'>Edit</a></td>";
+					echo "<td><a class='btn btn-warning' onClick=\"javascript: return confirm('Are you sure you reset views on this post?');\" href='posts.php?reset_views={$post_id}'>Reset Views</a></td>";
+
+					//First form of deleting
 					// echo "<td><a onClick=\"javascript: return confirm('Are you sure you want to delete?');\" href='posts.php?delete={$post_id}'>Delete</a></td>";
-					echo "<td><a rel='$post_id' href='javascript:void(0)' class='delete_link'>Delete</a></td>";
+
+					//Second form of deleting
+					// echo "<td><a rel='$post_id' href='javascript:void(0)' class='delete_link'>Delete</a></td>";
+
+					//Newest form of deleting
+				  ?>
+				  
+				  <form method="post">
+				  <input type="hidden" name="post_id" value="<?php echo $post_id?>">
+				  <?php
+				 	 	echo '<td><input class="btn btn-danger" type="submit" name = "delete" value="Delete"></td>';
+				  ?>
+				  </form>
+				  <?php
 					echo "</tr>";
 				}
 				?>
@@ -189,8 +209,8 @@ if(isset($_POST['checkBoxArray'])) {
 
 <?php 
 
-if(isset($_GET['delete'])) {
-	$get_post_id = escape($_GET['delete']);
+if(isset($_POST['delete'])) {
+	$get_post_id = escape($_POST['post_id']);
 	$query = "DELETE FROM posts WHERE post_id = {$get_post_id}";
 	$delete_query = mysqli_query($connect, $query);
 	header("Location: posts.php");
