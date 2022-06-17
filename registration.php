@@ -4,49 +4,7 @@
 <?php
 
 if(isset($_POST['submit'])) {
-    if(!empty($_POST['username']) && !empty($_POST['email']) && !empty($_POST['password'])) {
-        if (!usernameExists($_POST['username'])) {
-        $username = $_POST['username'];
-        $email = $_POST['email'];
-        $password = $_POST['password'];
-        $firstname = $_POST['firstname'];
-        $lastname = $_POST['lastname'];
-
-        $username = escape($username);
-        $email = escape($email);
-        $password = escape($password);
-        $firstname = escape($firstname);
-        $lastname = escape($lastname);
-
-        $password = password_hash($password, PASSWORD_BCRYPT, array('cost' => 12));
-
-        // OLD CRYPT
-        // $query = "SELECT user_randSalt FROM users";
-        // $select_randsalt_query = mysqli_query($connect, $query);
-        // if(!$select_randsalt_query) {
-        //     die("QUERY FAILED " . mysqli_error($connect));
-        // }
-
-        // $row = mysqli_fetch_assoc($select_randsalt_query);
-        // $randSalt = $row['user_randSalt'];
-        // $password = crypt($password, $randSalt);
-
-        $query = "INSERT INTO users (username, user_email, user_password, user_role, user_firstname, user_lastname) ";
-        $query .= "VALUES('{$username}', '{$email}', '{$password}', 'subscriber', '{$firstname}', '{$lastname}')";
-        $register_user_query = mysqli_query($connect, $query);
-
-        if(!$register_user_query) {
-            die("QUERY FAILED " . mysqli_error($connect)) . ' ' . mysqli_errno($connect);
-        }
-        
-        header("Location: index.php");
-
-    } else $message = "<strong><p style='color:red;font-size:25px;' class='text-center'>This username already taken!</p></strong>";
-
-    } else {
-        // echo "<strong><p style='color:red;font-size:25px;' class='text-center'>You should fill all the fields!</p></strong>";
-        $message = "<strong><p style='color:red;font-size:25px;' class='text-center'>You should fill all the fields!</p></strong>";
-    }
+    $message = register_user($_POST['username'], $_POST['email'], $_POST['password']);
 }
 
 

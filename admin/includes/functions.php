@@ -157,6 +157,76 @@ function usernameExists($username) {
 	return false;
 }
 
+function emailExists($email) {
+	global $connect;
+
+	$query = "SELECT user_email FROM users WHERE user_email = '{$email}'";
+	$result = mysqli_query($connect, $query);
+
+	if(!$result) 
+		die("QUERY FAILED " . mysqli_error($connect));
+
+	if(mysqli_num_rows($result) > 0) {
+		return true;
+	}
+
+	return false;
+}
+
+function redirect($location) {
+	return header("Location: " . $location);
+}
+
+function register_user($username, $email, $password) {
+	global $connect;
+
+	if(!empty($_POST['username']) && !empty($_POST['email']) && !empty($_POST['password'])) {
+		if (!usernameExists($_POST['username'])) {
+			if(!emailExists($_POST['email'])) {
+		  		$username = $_POST['username'];
+				$email = $_POST['email'];
+				$password = $_POST['password'];
+				$firstname = $_POST['firstname'];
+				$lastname = $_POST['lastname'];
+
+				$username = escape($username);
+				$email = escape($email);
+				$password = escape($password);
+				$firstname = escape($firstname);
+				$lastname = escape($lastname);
+
+				$password = password_hash($password, PASSWORD_BCRYPT, array('cost' => 12));
+
+				// OLD CRYPT
+				// $query = "SELECT user_randSalt FROM users";
+				// $select_randsalt_query = mysqli_query($connect, $query);
+				// if(!$select_randsalt_query) {
+				//     die("QUERY FAILED " . mysqli_error($connect));
+				// }
+
+				// $row = mysqli_fetch_assoc($select_randsalt_query);
+				// $randSalt = $row['user_randSalt'];
+				// $password = crypt($password, $randSalt);
+
+				$query = "INSERT INTO users (username, user_email, user_password, user_role, user_firstname, user_lastname) ";
+				$query .= "VALUES('{$username}', '{$email}', '{$password}', 'subscriber', '{$firstname}', '{$lastname}')";
+				$register_user_query = mysqli_query($connect, $query);
+
+				if(!$register_user_query) {
+						die("QUERY FAILED " . mysqli_error($connect)) . ' ' . mysqli_errno($connect);
+				}
+
+				header("Location: index.php");
+
+		} else return "<strong><p style='color:red;font-size:25px;' class='text-center'>This email already taken!</p></strong>";
+
+  	} else return "<strong><p style='color:red;font-size:25px;' class='text-center'>This username already taken!</p></strong>";
+
+  } else {
+		// echo "<strong><p style='color:red;font-size:25px;' class='text-center'>You should fill all the fields!</p></strong>";
+		return "<strong><p style='color:red;font-size:25px;' class='text-center'>You should fill all the fields!</p></strong>";
+  }
+}
 ?>
 
 
