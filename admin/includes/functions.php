@@ -183,7 +183,7 @@ function register_user($username, $email, $password, $firstname, $lastname) {
 	if(!empty($username) && !empty($email) && !empty($password) && !empty($firstname) && !empty($lastname)) {
 		if (!usernameExists($username)) {
 			if(!emailExists($email)) {
-				if (strlen($password) <= 5) {
+				if (strlen($password) > 5) {
 				
 
 					//After all the validation
