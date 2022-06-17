@@ -177,55 +177,53 @@ function redirect($location) {
 	return header("Location: " . $location);
 }
 
-function register_user($username, $email, $password) {
+function register_user($username, $email, $password, $firstname, $lastname) {
 	global $connect;
 
-	if(!empty($_POST['username']) && !empty($_POST['email']) && !empty($_POST['password'])) {
-		if (!usernameExists($_POST['username'])) {
-			if(!emailExists($_POST['email'])) {
-		  		$username = $_POST['username'];
-				$email = $_POST['email'];
-				$password = $_POST['password'];
-				$firstname = $_POST['firstname'];
-				$lastname = $_POST['lastname'];
+	if(!empty($username) && !empty($email) && !empty($_POST[$password])&& !empty($firstname)&& !empty($lastname)) {
+		if ($password < 5) {
+			if (!usernameExists($username)) {
+				if(!emailExists($email)) {
 
-				$username = escape($username);
-				$email = escape($email);
-				$password = escape($password);
-				$firstname = escape($firstname);
-				$lastname = escape($lastname);
+					//After all the validation
 
-				$password = password_hash($password, PASSWORD_BCRYPT, array('cost' => 12));
+					$password = password_hash($password, PASSWORD_BCRYPT, array('cost' => 12));
 
-				// OLD CRYPT
-				// $query = "SELECT user_randSalt FROM users";
-				// $select_randsalt_query = mysqli_query($connect, $query);
-				// if(!$select_randsalt_query) {
-				//     die("QUERY FAILED " . mysqli_error($connect));
-				// }
+					// ---- OLD CRYPT ----
+					// $query = "SELECT user_randSalt FROM users";
+					// $select_randsalt_query = mysqli_query($connect, $query);
+					// if(!$select_randsalt_query) {
+					//     die("QUERY FAILED " . mysqli_error($connect));
+					// }
+					// $row = mysqli_fetch_assoc($select_randsalt_query);
+					// $randSalt = $row['user_randSalt'];
+					// $password = crypt($password, $randSalt);
 
-				// $row = mysqli_fetch_assoc($select_randsalt_query);
-				// $randSalt = $row['user_randSalt'];
-				// $password = crypt($password, $randSalt);
+					$query = "INSERT INTO users (username, user_email, user_password, user_role, user_firstname, user_lastname) ";
+					$query .= "VALUES('{$username}', '{$email}', '{$password}', 'subscriber', '{$firstname}', '{$lastname}')";
+					$register_user_query = mysqli_query($connect, $query);
 
-				$query = "INSERT INTO users (username, user_email, user_password, user_role, user_firstname, user_lastname) ";
-				$query .= "VALUES('{$username}', '{$email}', '{$password}', 'subscriber', '{$firstname}', '{$lastname}')";
-				$register_user_query = mysqli_query($connect, $query);
+					if(!$register_user_query) {
+							die("QUERY FAILED " . mysqli_error($connect)) . ' ' . mysqli_errno($connect);
+					}
 
-				if(!$register_user_query) {
-						die("QUERY FAILED " . mysqli_error($connect)) . ' ' . mysqli_errno($connect);
-				}
+					header("Location: index.php");
 
-				header("Location: index.php");
+			} else $message = "This email already taken!";
 
-		} else return "<strong><p style='color:red;font-size:25px;' class='text-center'>This email already taken!</p></strong>";
+		} else $message = "This username already taken!";
 
-  	} else return "<strong><p style='color:red;font-size:25px;' class='text-center'>This username already taken!</p></strong>";
-
+	} else $message = "This username already taken!";
   } else {
 		// echo "<strong><p style='color:red;font-size:25px;' class='text-center'>You should fill all the fields!</p></strong>";
-		return "<strong><p style='color:red;font-size:25px;' class='text-center'>You should fill all the fields!</p></strong>";
+		$message = "You should fill all the fields!";
   }
+
+  if(!empty($message))
+  	$new_message = "<strong><p style='color:red;font-size:25px;' class='text-center'>" . $message . "</p></strong>";
+	else $new_message = '';
+
+	return $new_message;
 }
 ?>
 

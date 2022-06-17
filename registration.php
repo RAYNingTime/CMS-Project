@@ -4,7 +4,29 @@
 <?php
 
 if(isset($_POST['submit'])) {
-    $message = register_user($_POST['username'], $_POST['email'], $_POST['password']);
+
+    $username = escape($_POST['username']);
+    $email = escape($_POST['email']);
+    $password = escape($_POST['password']);
+    $firstname = escape($_POST['firstname']);
+    $lastname = escape($_POST['lastname']);
+
+    $error = [
+        'username' => '',
+        'firstname' => '',
+        'lastname' => '',
+        'email' => '',
+        'password' => ''
+    ];
+
+
+    } else if(strlen($username) < 4) {
+        $error['username'] = 'Username needs to be longer!';
+    }
+
+
+
+    $message = register_user($username, $email, $password, $firstname, $lastname);
 }
 
 
