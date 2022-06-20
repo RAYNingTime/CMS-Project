@@ -24,7 +24,6 @@ if(ifItIsMethod('post')) {
 		}
 	}
 }
-
 ?>
 
 <!-- Page Content -->
