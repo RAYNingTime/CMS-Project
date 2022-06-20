@@ -7,7 +7,21 @@
 <?php
 
 if(isset($_POST['liked'])){
-    echo"<h1>It works</h1>";
+    $post_id = $_POST['post_id'];
+    //Select Post
+
+    $query = "SELECT * FROM posts WHERE post_id=$post_id";
+    $postResult = mysqli_query($connect, $query);
+    $post= mysqli_fetch_array($postResult);
+    $likes = $post['likes'];
+
+    if(mysqli_num_rows($postResult) >=1){
+        echo $post['post_id'];
+    }
+
+    //Update Post
+
+    //Insert data to Likes
 }
 
 ?>
