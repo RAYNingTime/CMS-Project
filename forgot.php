@@ -3,7 +3,6 @@
 <?php include "admin/includes/functions.php";?>
 
 <?php
-
 if(!ifItIsMethod('get') && !isset($_GET['forgot'])) {
 	redirect('index.php');
 }
