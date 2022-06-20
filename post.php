@@ -8,8 +8,7 @@
 if(isset($_POST['liked'])) {
  
     $post_id = $_POST['post_id'];
- 
-   $user_id = $_POST['user_id'];
+    $user_id = $_POST['user_id'];
  
      //1 =  FETCHING THE RIGHT POST
  
@@ -23,7 +22,9 @@ if(isset($_POST['liked'])) {
     mysqli_query($connect, "UPDATE posts SET likes= $likes+1 WHERE post_id=$post_id");
  
     // 3 = CREATE LIKES FOR POST
- 
+    
+   mysqli_query($connect, "INSERT INTO likes(user_id, post_id) VALUES($user_id, $post_id)");
+   exit();
 }
 ?>
 ?>
