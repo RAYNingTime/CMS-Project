@@ -19,8 +19,7 @@
     <!-- Blog Search Well -->
     <div class="well">
         <h4>Login</h4>
-        <form action="includes/login.php" method ="post">
-            <?php if(isset($_GET['incorrect_pass'])) echo "<strong><p style='color:red;'> You've entered an incorrect login or password! </p></strong>";?>
+        <form action="login.php" method ="post">
         <div class="form-group">
             <input name ="username" type="text" class="form-control" placeholder="Enter username" autocomplete = "on">
         </div>
@@ -29,6 +28,9 @@
             <span class ="input-group-btn">
                 <button class="btn btn-primary" name="login" type="submit">Submit</button>
             </span>
+        </div>
+        <div class="form-group">
+            <a href="forgot.php?forgot=<?php echo uniqid(true);?>">Forgot Password</a>
         </div>
         </form><!-- search form -->
         <!-- /.input-group -->

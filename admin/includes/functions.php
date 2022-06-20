@@ -281,7 +281,7 @@ function login_user($username, $password) {
 	}
 	else {
 		
-		redirect("/cms/index.php?incorrect_pass=true");
+		redirect("/cms/login.php?incorrect_pass=true");
 	}
 
 }

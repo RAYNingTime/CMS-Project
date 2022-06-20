@@ -47,7 +47,6 @@
 
 							echo "<li class='{$category_class}'><a href='category.php?category=$cat_id'>{$cat_title}</a></li>";
 						}
-						echo "<li><a href='admin'>Admin</a></li>";
 
 
 
@@ -55,7 +54,13 @@
                         // echo "<li><a href='contact.php'>Contact</a></li>";
 
 
-                        if(!isset($_SESSION['username'])) {
+                        if(isLoggedIn()){
+                        echo "<li><a href='admin'>Admin</a></li>";
+
+                        echo "<li><a href='/cms/includes/logout.php'>Logout</a></li>";
+                        } else {
+                        echo "<li><a href='/cms/login.php'>Login</a></li>";
+                        
                         echo "<li class='{$registration_class}'><a href='registration.php'>Registration</a></li>";
                         }
                         

@@ -4,6 +4,28 @@
 <!-- Navigation -->
 <?php include "includes/navigation.php";?>
 
+<?php
+
+if(isset($_POST['liked'])){
+    $post_id = $_POST['post_id'];
+    //Select Post
+
+    $query = "SELECT * FROM posts WHERE post_id=$post_id";
+    $postResult = mysqli_query($connect, $query);
+    $post= mysqli_fetch_array($postResult);
+    $likes = $post['likes'];
+
+    if(mysqli_num_rows($postResult) >=1){
+        echo $post['post_id'];
+    }
+
+    //Update Post
+
+    //Insert data to Likes
+}
+
+?>
+
 <!-- Page Content -->
 <div class="container">
 
@@ -22,11 +44,13 @@
             $view_query = "UPDATE posts SET post_view_count = post_view_count + 1 WHERE post_id = {$the_post_id}";
             $send_query = mysqli_query($connect, $view_query);
         
-            if(isset($_SESSION['user_role']) && $_SESSION['user_role'] == 'admin'){
-                $query = "SELECT * FROM posts WHERE post_id = $the_post_id";
-            } else
+            if(isset($_SESSION['user_role'])){
+                if($_SESSION['user_role'] == 'admin'){
                 $query = "SELECT * FROM posts WHERE post_id = $the_post_id AND 'post_status' = 'published'";
-
+                }
+            } else {
+                $query = "SELECT * FROM posts WHERE post_id = $the_post_id";
+            }
             $select_all_posts_query = mysqli_query($connect, $query);
 
             if(mysqli_num_rows($select_all_posts_query) < 1) {
@@ -59,6 +83,23 @@
             <hr>
             <p><?php echo $post_content;?></p>
             <hr>
+
+            <div class="row">
+                <p class="pull-right">
+                    <a class="like" href="#">
+                        <span class="glyphicon glyphicon-thumbs-up"></span>
+                        Like
+                    </a>
+                </p>
+            </div>
+
+            <div class="row">
+                <p class="pull-right">
+                        Like: 10
+                </p>
+            </div>
+
+            <div class="clearfix"></div>
         <?php
         }
         ?>
@@ -92,7 +133,7 @@
 
                ?> 
 
-                <script> header(header:"Location:/cms/post.php?p_id=".$the_post_id </script>
+                <script> header("Location:/cms/post.php?p_id=".$the_post_id) </script>
 
                <?php
             } else {
@@ -175,3 +216,24 @@
     <hr>
 
 <?php include "includes/footer.php";?>
+
+<script>
+    $(document).ready(function(){
+
+        var post_id = <?php echo $the_post_id;?>
+        var user_id = 10;
+
+        $('.like').click(function(){
+            $.ajax({
+                url: "/cms/post.php?p_id=<?php echo $the_post_id;?>",
+                type = 'post',
+                date: {
+                    'liked': 1,
+                    'post_id': post_id,
+                    'user_id': user_id
+                }
+            })
+
+        });
+    });
+</script>
