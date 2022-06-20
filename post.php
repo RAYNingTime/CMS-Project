@@ -64,7 +64,7 @@
 
             <div class="row">
                 <p class="pull-right">
-                    <a href="">
+                    <a class="like" href="#">
                         <span class="glyphicon glyphicon-thumbs-up"></span>
                         Like
                     </a>
@@ -194,3 +194,12 @@
     <hr>
 
 <?php include "includes/footer.php";?>
+
+<script>
+    $(document).ready(function(){
+        $('.like').click(function(){
+            console.log("IT WORKS")
+
+        });
+    });
+</script>
