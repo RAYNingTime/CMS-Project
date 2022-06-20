@@ -25,7 +25,6 @@ if(ifItIsMethod('post')) {
 	}
 }
 ?>
-
 <!-- Page Content -->
 <div class="container">
     <div class="form-gap"></div>
