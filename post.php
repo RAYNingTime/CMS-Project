@@ -22,11 +22,13 @@
             $view_query = "UPDATE posts SET post_view_count = post_view_count + 1 WHERE post_id = {$the_post_id}";
             $send_query = mysqli_query($connect, $view_query);
         
-            if(isset($_SESSION['user_role']) && $_SESSION['user_role'] == 'admin'){
-                $query = "SELECT * FROM posts WHERE post_id = $the_post_id";
-            } else
+            if(isset($_SESSION['user_role'])){
+                if($_SESSION['user_role'] == 'admin'){
                 $query = "SELECT * FROM posts WHERE post_id = $the_post_id AND 'post_status' = 'published'";
-
+                }
+            } else {
+                $query = "SELECT * FROM posts WHERE post_id = $the_post_id";
+            }
             $select_all_posts_query = mysqli_query($connect, $query);
 
             if(mysqli_num_rows($select_all_posts_query) < 1) {
@@ -59,6 +61,23 @@
             <hr>
             <p><?php echo $post_content;?></p>
             <hr>
+
+            <div class="row">
+                <p class="pull-right">
+                    <a href="">
+                        <span class="glyphicon glyphicon-thumbs-up"></span>
+                        Like
+                    </a>
+                </p>
+            </div>
+
+            <div class="row">
+                <p class="pull-right">
+                        Like: 10
+                </p>
+            </div>
+
+            <div class="clearfix"></div>
         <?php
         }
         ?>
@@ -92,7 +111,7 @@
 
                ?> 
 
-                <script> header(header:"Location:/cms/post.php?p_id=".$the_post_id </script>
+                <script> header("Location:/cms/post.php?p_id=".$the_post_id) </script>
 
                <?php
             } else {
