@@ -28,7 +28,6 @@ if(ifItIsMethod('post')) {
 
 <!-- Page Content -->
 <div class="container">
-
     <div class="form-gap"></div>
     <div class="container">
         <div class="row">
