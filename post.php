@@ -5,25 +5,27 @@
 <?php include "includes/navigation.php";?>
 
 <?php
-
-if(isset($_POST['liked'])){
+if(isset($_POST['liked'])) {
+ 
     $post_id = $_POST['post_id'];
-    //Select Post
-
+ 
+   $user_id = $_POST['user_id'];
+ 
+     //1 =  FETCHING THE RIGHT POST
+ 
     $query = "SELECT * FROM posts WHERE post_id=$post_id";
     $postResult = mysqli_query($connect, $query);
-    $post= mysqli_fetch_array($postResult);
+    $post = mysqli_fetch_array($postResult);
     $likes = $post['likes'];
-
-    if(mysqli_num_rows($postResult) >=1){
-        echo $post['post_id'];
-    }
-
-    //Update Post
-
-    //Insert data to Likes
+ 
+    // 2 = UPDATE - INCREMENTING WITH LIKES
+ 
+    mysqli_query($connect, "UPDATE posts SET likes= $likes+1 WHERE post_id=$post_id");
+ 
+    // 3 = CREATE LIKES FOR POST
+ 
 }
-
+?>
 ?>
 
 <!-- Page Content -->
@@ -44,12 +46,11 @@ if(isset($_POST['liked'])){
             $view_query = "UPDATE posts SET post_view_count = post_view_count + 1 WHERE post_id = {$the_post_id}";
             $send_query = mysqli_query($connect, $view_query);
         
-            if(isset($_SESSION['user_role'])){
-                if($_SESSION['user_role'] == 'admin'){
-                $query = "SELECT * FROM posts WHERE post_id = $the_post_id AND 'post_status' = 'published'";
+            if(isset($_SESSION['user_role']) && $_SESSION['user_role'] == 'admin'){{
+                $query = "SELECT * FROM posts WHERE post_id = $the_post_id";
                 }
             } else {
-                $query = "SELECT * FROM posts WHERE post_id = $the_post_id";
+                $query = "SELECT * FROM posts WHERE post_id = $the_post_id AND 'post_status' = 'published'";
             }
             $select_all_posts_query = mysqli_query($connect, $query);
 
@@ -220,20 +221,25 @@ if(isset($_POST['liked'])){
 <script>
     $(document).ready(function(){
 
-        var post_id = <?php echo $the_post_id;?>
-        var user_id = 10;
+            var post_id = <?php echo $the_post_id; ?>;
+            
+            var user_id = 10;
+
+        // LIKING
 
         $('.like').click(function(){
             $.ajax({
-                url: "/cms/post.php?p_id=<?php echo $the_post_id;?>",
-                type = 'post',
-                date: {
+                url: "/cms/post.php?p_id=<?php echo $the_post_id; ?>",
+                type: 'post',
+                data: {
                     'liked': 1,
                     'post_id': post_id,
                     'user_id': user_id
                 }
-            })
-
+            });
         });
+
+
+
     });
 </script>
