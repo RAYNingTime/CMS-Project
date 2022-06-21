@@ -108,22 +108,33 @@ if(isset($_POST['unliked'])) {
             <hr>
             <p><?php echo $post_content;?></p>
 
+        <?php
+            if(isLoggedIn()) {
+        ?>
             <hr>
             <div class="row">
                 <p class="pull-right">
-                    <a class="<?php echo userLikedThisPost($the_post_id) ? 'unlike' : 'like';?>" href=""><span class="glyphicon glyphicon-thumbs-<?php echo userLikedThisPost($the_post_id) ? 'down' : 'up';?>"></span> <?php echo userLikedThisPost($the_post_id) ? ' Unlike' : ' Like';?> </a>
+                <strong><a style="font-size:22px;" class="<?php echo userLikedThisPost($the_post_id) ? 'unlike' : 'like';?>" href=""><span class="glyphicon glyphicon-thumbs-<?php echo userLikedThisPost($the_post_id) ? 'down' : 'up';?>"></span> <?php echo userLikedThisPost($the_post_id) ? ' Unlike' : ' Like';?> </a></strong>
                 </p>
-            </div>
-
+            </div>        
+        <?php
+          } else {
+            ?>
             <div class="row">
-                <p class="pull-right"> Like: <?php getPostLikes($the_post_id);?> </p>
+                <p style="font-size:16px;" class="pull-right">
+                    <strong>You need to <a  href="/cms/login.php">log in</a> to like the post.</strong>
+                </p>
+            </div>  
+            
+            <?php
+          }
+        }
+        ?>
+            <div class="row">
+                <strong><p style="font-size:22px;"class="pull-right"> Likes: <?php getPostLikes($the_post_id);?> </p></strong>
             </div>
 
             <div class="clearfix"></div>
-        <?php
-      
-        }
-        ?>
 
         <!-- Blog Comments -->
 
@@ -243,7 +254,7 @@ if(isset($_POST['unliked'])) {
 
             var post_id = <?php echo $the_post_id; ?>;
             
-            var user_id = 10;
+            var user_id = <?php echo loggedInUserId(); ?>;
 
         // LIKING
 
