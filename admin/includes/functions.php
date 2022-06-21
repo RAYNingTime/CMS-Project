@@ -292,8 +292,12 @@ function query($query){
 }
 
 function loggedInUserId(){
+	global $connect;
 	if(isLoggedIn()){
 		$result = query("SELECT * FROM users WHERE username='" . $_SESSION['username'] . "'" );
+		if(!$result) {
+			die("QUERY FAILED " . mysqli_error($connect));
+		}
 		$user = mysqli_fetch_array($result);
 		return mysqli_num_rows($result) >= 1 ? $user['user_id'] : false;
 	}
@@ -301,10 +305,22 @@ function loggedInUserId(){
 }
 
 function userLikedThisPost($post_id =''){
+	global $connect;
 	$result = query("SELECT * FROM likes WHERE user_id=" . loggedInUserId() . " AND post_id=$post_id");
+	if(!$result) {
+		die("QUERY FAILED " . mysqli_error($connect));
+	}
 	return mysqli_num_rows($result) >= 1 ? true : false;
 }
 
+function getPostLikes($post_id){
+	global $connect;
+	$result = query("SELECT * FROM likes WHERE post_id=$post_id");
+	if(!$result) {
+		die("QUERY FAILED " . mysqli_error($connect));
+	}
+	echo mysqli_num_rows($result);
+}
 
 ?>
 
