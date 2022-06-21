@@ -294,7 +294,13 @@ function query($query){
 function isLoggedInUserId(){
 	if(isLoggedIn()){
 		$result = query("SELECT * FROM users WHERE username='" . $_SESSION['username'] . "'" );
+		$user = mysqli_fetch_array($result);
+		
+		if(mysqli_num_rows($result) >=1){
+			return $user['user_id'];
+		}
 	}
+	return false;
 }
 
 ?>
