@@ -285,6 +285,18 @@ function login_user($username, $password) {
 	}
 
 }
+
+function query($query){
+	global $connect;
+	return mysqli_query($connect, $query);
+}
+
+function isLoggedInUserId(){
+	if(isLoggedIn()){
+		$result = query("SELECT * FROM users WHERE username='" . $_SESSION['username'] . "'" );
+	}
+}
+
 ?>
 
 
