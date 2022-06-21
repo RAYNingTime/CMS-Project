@@ -26,7 +26,28 @@ if(isset($_POST['liked'])) {
    mysqli_query($connect, "INSERT INTO likes(user_id, post_id) VALUES($user_id, $post_id)");
    exit();
 }
-?>
+
+if(isset($_POST['unliked'])) {
+ 
+    $post_id = $_POST['post_id'];
+    $user_id = $_POST['user_id'];
+ 
+     //1 =  FETCHING THE RIGHT POST
+ 
+    $query = "SELECT * FROM posts WHERE post_id=$post_id";
+    $postResult = mysqli_query($connect, $query);
+    $post = mysqli_fetch_array($postResult);
+    $likes = $post['likes'];
+ 
+    // 2 = UPDATE - DECRIMENTING LIKES
+ 
+    mysqli_query($connect, "UPDATE posts SET likes= $likes-1 WHERE post_id=$post_id");
+    
+    // 3 = DELETE LIKES FROM POST
+    
+    mysqli_query($connect, "DELETE FROM likes WHERE post_id=$post_id AND user_id=$user_id");
+   exit();
+}
 ?>
 
 <!-- Page Content -->
@@ -50,12 +71,14 @@ if(isset($_POST['liked'])) {
             if(isset($_SESSION['user_role']) && $_SESSION['user_role'] == 'admin'){{
                 $query = "SELECT * FROM posts WHERE post_id = $the_post_id";
                 }
-            } else {
-                $query = "SELECT * FROM posts WHERE post_id = $the_post_id AND 'post_status' = 'published'";
+            } else { 
+                $query = "SELECT * FROM posts WHERE post_id = $the_post_id AND post_status = 'published'";
             }
             $select_all_posts_query = mysqli_query($connect, $query);
 
             if(mysqli_num_rows($select_all_posts_query) < 1) {
+
+
                 echo "</br></br><h4 class='text-center'>Currently, there are no posts.</h4>";
                 echo "<strong><p style='color:grey;' class='text-center'>Return later.</p></strong>";
             }
@@ -88,17 +111,18 @@ if(isset($_POST['liked'])) {
 
             <div class="row">
                 <p class="pull-right">
-                    <a class="like" href="#">
-                        <span class="glyphicon glyphicon-thumbs-up"></span>
-                        Like
-                    </a>
+                    <a class="like" href="#"><span class="glyphicon glyphicon-thumbs-up"></span> Like </a>
+                </p>
+            </div>
+            
+            <div class="row">
+                <p class="pull-right">
+                    <a class="unlike" href="#"><span class="glyphicon glyphicon-thumbs-down"></span> Unlike </a>
                 </p>
             </div>
 
             <div class="row">
-                <p class="pull-right">
-                        Like: 10
-                </p>
+                <p class="pull-right"> Like: 10 </p>
             </div>
 
             <div class="clearfix"></div>
@@ -240,6 +264,19 @@ if(isset($_POST['liked'])) {
             });
         });
 
+            // UNLIKING
+
+        $('.unlike').click(function(){
+            $.ajax({
+                url: "/cms/post.php?p_id=<?php echo $the_post_id; ?>",
+                type: 'post',
+                data: {
+                    'unliked': 1,
+                    'post_id': post_id,
+                    'user_id': user_id
+                }
+            });
+        });
 
 
     });
