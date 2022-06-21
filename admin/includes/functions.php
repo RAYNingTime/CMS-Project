@@ -291,17 +291,20 @@ function query($query){
 	return mysqli_query($connect, $query);
 }
 
-function isLoggedInUserId(){
+function loggedInUserId(){
 	if(isLoggedIn()){
 		$result = query("SELECT * FROM users WHERE username='" . $_SESSION['username'] . "'" );
 		$user = mysqli_fetch_array($result);
-		
-		if(mysqli_num_rows($result) >=1){
-			return $user['user_id'];
-		}
+		return mysqli_num_rows($result) >= 1 ? $user['user_id'] : false;
 	}
 	return false;
 }
+
+function userLikedThisPost($post_id =''){
+	$result = query("SELECT * FROM likes WHERE user_id=" . loggedInUserId() . " AND post_id=$post_id");
+	return mysqli_num_rows($result) >= 1 ? true : false;
+}
+
 
 ?>
 
