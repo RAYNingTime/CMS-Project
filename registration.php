@@ -30,6 +30,15 @@ if(isset($_POST['submit'])) {
  
     <!-- Page Content -->
 <div class="container">
+<form method="get" class="navbar-form navbar-right" action=""  id="language_form">
+    <div class="form-group">
+        <select name="lang" class="form-control" onchange="changeLanguage()">
+            <option value="en">English</option>
+            <option value="ukr">Український</option>
+        </select>
+    </div>
+</form>
+
 <section id="login">
     <div class="container">
         <div class="row">
@@ -73,6 +82,10 @@ if(isset($_POST['submit'])) {
 
 <hr>
 
-
+<script>
+    function changeLanguage(){
+        document.getElementById('language_form').submit();
+    }
+</script>
 
 <?php include "includes/footer.php";?>
