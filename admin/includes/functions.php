@@ -276,8 +276,9 @@ function insertCategories(){
 					$already_taken = true;
 				}
 			}
+
 			if($already_taken == false) {
-			$query = "INSERT INTO categories(cat_title) VALUES ('{$cat_title}')";
+			$query = "INSERT INTO categories(cat_title,user_id) VALUES ('{$cat_title}', " . loggedInUserId() . ")";
 
 			$create_category = mysqli_query($connect , $query);
 
