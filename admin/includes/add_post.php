@@ -14,8 +14,20 @@
 
 		move_uploaded_file($post_image_temp, "../images/$post_image");
 
-		$query = "INSERT INTO posts(post_category_id, post_title, post_user, post_date, post_image, post_content, post_tags, post_status)";
-		$query .= "VALUES({$post_category_id},'{$post_title}','{$post_user}', now() ,'{$post_image}','{$post_content}','{$post_tags}','{$post_status}')";
+
+		//This is not included in lectures, so I should make it by myself
+
+		if(isset($post_user)) {
+			$query = "SELECT * FROM users WHERE username='$post_user'";
+			$result = mysqli_query($connect, $query);
+			$user = mysqli_fetch_array($result);
+			if(mysqli_num_rows($result)>=1)
+				$user_id = $user['user_id'];
+		}
+
+
+		$query = "INSERT INTO posts(post_category_id, user_id, post_title, post_user, post_date, post_image, post_content, post_tags, post_status)";
+		$query .= "VALUES({$post_category_id},{$user_id},'{$post_title}','{$post_user}', now() ,'{$post_image}','{$post_content}','{$post_tags}','{$post_status}')";
 
 		$create_post_query = mysqli_query($connect, $query);
 
@@ -26,6 +38,8 @@
 		
 		echo "<p class='bg-success'>Post Created: <a href='posts.php'> View all posts </a> or <a href='../post.php?p_id={$get_post_id}'>View Post</a> </p>";
 	}
+
+	
 ?>
 
 <form action="" method="post" enctype="multipart/form-data">

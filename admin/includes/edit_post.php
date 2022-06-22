@@ -32,6 +32,14 @@ if(isset($_POST['update_post'])) {
 	$post_content = escape($_POST['post_content']);
 	$post_tags = escape($_POST['post_tags']);
 
+	if(isset($post_user)) {
+		$query = "SELECT * FROM users WHERE username='$post_user'";
+		$result = mysqli_query($connect, $query);
+		$user = mysqli_fetch_array($result);
+		if(mysqli_num_rows($result)>=1)
+			$user_id = $user['user_id'];
+	}
+
 	move_uploaded_file($post_image_temp, "../images/$post_image");
 
 	if(empty($post_image)){
@@ -47,6 +55,7 @@ if(isset($_POST['update_post'])) {
 	$query = "UPDATE posts SET ";
 	$query .="post_title   = '{$post_title}', ";
 	$query .="post_category_id = '{$post_category_id}', ";
+	$query .="user_id = '{$user_id}', ";
 	$query .="post_date    = now(), ";
 	$query .="post_user = '{$post_user}', ";
 	$query .="post_status  = '{$post_status}', ";

@@ -57,7 +57,6 @@
                     $post_id = $row['post_id'];
                     $post_title = $row['post_title'];
                     $post_user = $row['post_user'];
-                    $post_author = $row['post_author'];
                     $post_date = $row['post_date'];
                     $post_image = $row['post_image'];
                     $post_content = substr($row['post_content'],0,200);
@@ -73,11 +72,7 @@
                 <p class="lead">
                     
                 <?php 
-                    if(!empty($post_author)) {
-						echo "by <a href='author_posts.php?author=" . $post_author . "&p_id=" . $post_id . "' >" . $post_author . "</a>";
-					} else if (!empty($post_user)) {
-						echo "by <a href='author_posts.php?author=" .  $post_user . "&p_id=" . $post_id . "' >" . $post_user . "</a>";
-					}
+				    echo "by <a href='author_posts.php?author=" .  $post_user . "&p_id=" . $post_id . "' >" . $post_user . "</a>";
                 ?>
                     
                 </p>
