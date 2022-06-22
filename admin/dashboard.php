@@ -13,8 +13,8 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <h1 class="page-header">
-                            Welcome to admin
-                            <small><?php echo strtoupper(get_username());?></small>
+                            Welcome to the Admin Dashboard
+                            <small><?php echo $_SESSION['username'];?></small>
                         </h1>
                     </div>
                 </div>

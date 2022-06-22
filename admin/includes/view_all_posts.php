@@ -30,7 +30,7 @@ if(isset($_POST['checkBoxArray'])) {
 				while ($row = mysqli_fetch_array($select_post_query)){
 					$post_category_id = $row['post_category_id']; 
 					$post_title = $row['post_title']; 
-					$post_author = $row['post_author']; 
+					$post_user = $row['post_user']; 
 					$post_date = $row['post_date']; 
 					$post_image = $row['post_image']; 
 					$post_content = $row['post_content']; 
@@ -38,8 +38,8 @@ if(isset($_POST['checkBoxArray'])) {
 					$post_status = $row['post_status']; 
 				}
 
-				$query = "INSERT INTO posts(post_category_id, post_title, post_author, post_date, post_image, post_content, post_tags, post_status)";
-				$query .= "VALUES({$post_category_id},'{$post_title}','{$post_author}', '{$post_date}' ,'{$post_image}','{$post_content}','{$post_tags}' ,'{$post_status}')";
+				$query = "INSERT INTO posts(post_category_id, post_title, post_user, post_date, post_image, post_content, post_tags, post_status)";
+				$query .= "VALUES({$post_category_id},'{$post_title}','{$post_user}', '{$post_date}' ,'{$post_image}','{$post_content}','{$post_tags}' ,'{$post_status}')";
 
 				$copy_query = mysqli_query($connect, $query);
 				if(!$copy_query) {
@@ -99,7 +99,7 @@ if(isset($_POST['checkBoxArray'])) {
 				<?php
 				// $query = "SELECT * FROM posts ORDER BY post_id DESC";
 
-				$query = "SELECT posts.post_id, posts.post_category_id, posts.post_title, posts.post_author, posts.post_user, posts.post_date, posts.post_image, posts.post_content, posts.post_tags, posts.post_status, posts.post_view_count, ";
+				$query = "SELECT posts.post_id, posts.post_category_id, posts.post_title, posts.post_user, posts.post_date, posts.post_image, posts.post_content, posts.post_tags, posts.post_status, posts.post_view_count, ";
 				$query .= "categories.cat_id, categories.cat_title FROM posts LEFT JOIN categories ON posts.post_category_id = categories.cat_id ORDER BY posts.post_id DESC";
 				$select_posts = mysqli_query($connect, $query);
 			
@@ -107,8 +107,7 @@ if(isset($_POST['checkBoxArray'])) {
 					$post_id = $row['post_id'];
 					$post_category_id = $row['post_category_id']; 
 					$post_title = $row['post_title']; 
-					$post_author = $row['post_author']; 
-					$post_user = $row['post_user'];
+					$post_user = $row['post_user']; 
 					$post_date = $row['post_date']; 
 					$post_image = $row['post_image']; 
 
@@ -136,17 +135,8 @@ if(isset($_POST['checkBoxArray'])) {
 					// $cat_title = $row['cat_title'];
 
 					echo "<td>{$cat_title}</td>";
-
 					echo "<td>{$post_title}</td>";
-
-					if(!empty($post_author)) {
-						echo "<td>{$post_author}</td>";
-					} else if (!empty($post_user)) {
-						echo "<td>{$post_user}</td>";
-					}
-					
-					
-
+					echo "<td>{$post_user}</td>";
 					echo "<td>{$post_date}</td>";
 					echo "<td><img src ='../images/{$post_image}' alt = 'images' width='200'></td>";
 					echo "<td>{$post_content}</td>";

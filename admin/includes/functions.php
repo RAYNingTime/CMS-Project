@@ -1,5 +1,53 @@
 <?php
 
+//===== DATABASE HELPERS =====//
+
+function query($query){
+	global $connect;
+	$result = mysqli_query($connect, $query);
+	if(!$result) 
+		die("QUERY FAILED " . mysqli_error($connect));
+
+	return $result;
+}
+
+function redirect($location) {
+	header("Location: " . $location);
+	exit;
+}
+
+function fetchRecord($result){
+	return mysqli_fetch_array($result);
+}
+
+//===== END DATABASE HELPERS =====//
+
+//===== GENERAL HELPERS =====//
+
+function get_username(){
+	return isset($_SESSION['username']) ? $_SESSION['username'] : null;
+}
+
+//===== END GENERAL HELPERS =====//
+
+
+//===== AUTHENTIFICATION HELPERS =====//
+
+function is_admin(){
+	if(isLoggedIn()){
+		$result = query("SELECT user_role FROM users WHERE user_id=" . $_SESSION['user_id']);
+
+		$row = fetchRecord($result);
+
+		if($row['user_role'] == 'admin')
+			return true;
+	}
+
+	return false;
+}
+
+//===== END AUTHENTIFICATION HELPERS =====//
+
 function escape($string) {
 	global $connect;
 
@@ -97,58 +145,24 @@ function deleteCategories(){
 
 
 function recordCount($table){
-	global $connect;
-
-	$query = "SELECT * FROM " . $table;
-   $select_all = mysqli_query($connect, $query);
+   $select_all = query("SELECT * FROM " . $table);
 	$result = mysqli_num_rows($select_all);
-
-	if(!$select_all) {
-		die("QUERY FAILED " . mysqli_error($connect));
-	}
 
 	return $result;
 }
 
 function checkStatus($table, $column, $value){
-	global $connect;
-
-	$query = "SELECT * FROM $table WHERE $column = '$value'";
-	$select_all = mysqli_query($connect, $query);
+	$select_all = query("SELECT * FROM $table WHERE $column = '$value'");
 	$result = mysqli_num_rows($select_all);
 
-	if(!$select_all) {
-		die("QUERY FAILED " . mysqli_error($connect));
-	}
 
 	return $result;
 }
 
-function is_admin($username){
-	global $connect;
 
-	$query = "SELECT user_role FROM users WHERE username = '{$username}'";
-	$result = mysqli_query($connect, $query);
-
-	if(!$result) 
-		die("QUERY FAILED " . mysqli_error($connect));
-
-	$row = mysqli_fetch_array($result);
-
-	if($row['user_role'] == 'admin')
-		return true;
-	
-	return false;
-}
 
 function usernameExists($username) {
-	global $connect;
-
-	$query = "SELECT username FROM users WHERE username = '{$username}'";
-	$result = mysqli_query($connect, $query);
-
-	if(!$result) 
-		die("QUERY FAILED " . mysqli_error($connect));
+	$result = query("SELECT username FROM users WHERE username = '{$username}'");
 
 	if(mysqli_num_rows($result) > 0) {
 		return true;
@@ -158,13 +172,7 @@ function usernameExists($username) {
 }
 
 function emailExists($email) {
-	global $connect;
-
-	$query = "SELECT user_email FROM users WHERE user_email = '{$email}'";
-	$result = mysqli_query($connect, $query);
-
-	if(!$result) 
-		die("QUERY FAILED " . mysqli_error($connect));
+	$result = query("SELECT user_email FROM users WHERE user_email = '{$email}'");
 
 	if(mysqli_num_rows($result) > 0) {
 		return true;
@@ -173,10 +181,6 @@ function emailExists($email) {
 	return false;
 }
 
-function redirect($location) {
-	header("Location: " . $location);
-	exit;
-}
 
 function ifItIsMethod($method = null){
 	if($_SERVER['REQUEST_METHOD'] == strtoupper($method)){
@@ -200,8 +204,6 @@ function checkIfUserIsLoggedInAndRedirect($redirectLocation=null){
 }
 
 function register_user($username, $email, $password, $firstname, $lastname) {
-	global $connect;
-
 	if(!empty($username) && !empty($email) && !empty($password) && !empty($firstname) && !empty($lastname)) {
 		if (!usernameExists($username)) {
 			if(!emailExists($email)) {
@@ -224,11 +226,8 @@ function register_user($username, $email, $password, $firstname, $lastname) {
 
 					$query = "INSERT INTO users (username, user_email, user_password, user_role, user_firstname, user_lastname) ";
 					$query .= "VALUES('{$username}', '{$email}', '{$password}', 'subscriber', '{$firstname}', '{$lastname}')";
-					$register_user_query = mysqli_query($connect, $query);
+					$register_user_query = query($query);
 
-					if(!$register_user_query) {
-							die("QUERY FAILED " . mysqli_error($connect)) . ' ' . mysqli_errno($connect);
-					}
 
 			} else $message = "Your password should be longer than 5 digits!";
 
@@ -248,14 +247,7 @@ function register_user($username, $email, $password, $firstname, $lastname) {
 }
 
 function login_user($username, $password) {
-	global $connect;
-
-	$query = "SELECT * FROM users WHERE username = '{$username}'";
-	$select_user_query = mysqli_query($connect, $query);
-
-	if(!$select_user_query) {
-		die("QUERY FAILED " . mysqli_error($connect));
-	}
+	$select_user_query = query( "SELECT * FROM users WHERE username = '{$username}'");
 
 	while($row = mysqli_fetch_array($select_user_query)) {
 		$db_user_id = $row['user_id'];
@@ -272,6 +264,7 @@ function login_user($username, $password) {
 		// $password = crypt($password, $db_user_randSalt);
 
 	if ($username == $db_username && password_verify($password, $db_user_password)){
+		$_SESSION['user_id'] = $db_user_id;
 		$_SESSION['username'] = $db_username;
 		$_SESSION['first_name'] = $db_user_firstname;
 		$_SESSION['last_name'] = $db_user_lastname;
@@ -286,18 +279,12 @@ function login_user($username, $password) {
 
 }
 
-function query($query){
-	global $connect;
-	return mysqli_query($connect, $query);
-}
+
 
 function loggedInUserId(){
-	global $connect;
 	if(isLoggedIn()){
 		$result = query("SELECT * FROM users WHERE username='" . $_SESSION['username'] . "'" );
-		if(!$result) {
-			die("QUERY FAILED " . mysqli_error($connect));
-		}
+
 		$user = mysqli_fetch_array($result);
 		return mysqli_num_rows($result) >= 1 ? $user['user_id'] : false;
 	}
@@ -305,20 +292,14 @@ function loggedInUserId(){
 }
 
 function userLikedThisPost($post_id =''){
-	global $connect;
 	$result = query("SELECT * FROM likes WHERE user_id=" . loggedInUserId() . " AND post_id=$post_id");
-	if(!$result) {
-		die("QUERY FAILED " . mysqli_error($connect));
-	}
+
 	return mysqli_num_rows($result) >= 1 ? true : false;
 }
 
 function getPostLikes($post_id){
-	global $connect;
 	$result = query("SELECT * FROM likes WHERE post_id=$post_id");
-	if(!$result) {
-		die("QUERY FAILED " . mysqli_error($connect));
-	}
+
 	echo mysqli_num_rows($result);
 }
 
