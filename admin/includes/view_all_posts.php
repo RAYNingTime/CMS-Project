@@ -179,7 +179,6 @@ if(isset($_POST['checkBoxArray'])) {
 					echo "</tr>";
 				}}
 				?>
-
 		</tbody>
 	</table>
 </form>
