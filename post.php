@@ -259,7 +259,6 @@ if(isset($_POST['unliked'])) {
         var post_id = <?php echo $the_post_id; ?>;
         
         var user_id = <?php echo loggedInUserId(); ?>;
-
         // LIKING
 
         $('.like').click(function(){
