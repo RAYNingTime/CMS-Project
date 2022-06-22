@@ -104,6 +104,7 @@ if(isset($_POST['checkBoxArray'])) {
 				$select_posts = mysqli_query($connect, $query);
 			
 				while($row = mysqli_fetch_assoc($select_posts)) {
+					if((!is_admin() AND $row['post_user']==$_SESSION['username'])|| is_admin()) {
 					$post_id = $row['post_id'];
 					$post_category_id = $row['post_category_id']; 
 					$post_title = $row['post_title']; 
@@ -176,7 +177,7 @@ if(isset($_POST['checkBoxArray'])) {
 				  </form>
 				  <?php
 					echo "</tr>";
-				}
+				}}
 				?>
 
 		</tbody>
