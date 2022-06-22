@@ -2,6 +2,23 @@
 <?php  include "includes/navigation.php"; ?>
 
 <?php
+//Setting Language Variables
+
+if(isset($_GET['lang'])){
+    $_SESSION['lang'] = $_GET['lang'];
+
+    if(isset($_SESSION['lang'] && $_SESSION['lang'] == $_GET['lang'])){
+        echo "<script type='text/javascript'>location.reload()</script>";
+    }
+
+    if(isset($_SESSION['lang'])){
+        include "includes/languages/".$_SESSION['lang'].".php";
+    } else {
+        include "includes/languages/en.php";
+    }
+}
+
+
 
 if(isset($_POST['submit'])) {
 
