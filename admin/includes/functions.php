@@ -229,14 +229,15 @@ function users_online(){
 
 //===== USER SPECIFIC HELPERS =====//
 
-
-
 function get_all_user_smth($table){
 	$select_all_for_user = query("SELECT * FROM " . $table . " WHERE user_id=" . loggedInUserId());
 	return mysqli_num_rows($select_all_for_user);
 }
 
-
+function get_all_posts_user_comments(){
+	$result = query("SELECT * FROM posts INNER JOIN comments ON posts.post_id=comments.comment_post_id WHERE user_id=".loggedInUserId());
+	return mysqli_num_rows($result);
+}
 
 //===== END USER SPECIFIC HELPERS =====//
 
