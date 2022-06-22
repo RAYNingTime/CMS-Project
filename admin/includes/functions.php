@@ -239,6 +239,18 @@ function get_all_posts_user_comments(){
 	return mysqli_num_rows($result);
 }
 
+function personalCheckStatus($table, $column, $value){
+	$select_all = query("SELECT * FROM $table WHERE $column = '$value' AND user_id=" . loggedInUserId());
+	$result = mysqli_num_rows($select_all);
+
+	return $result;
+}
+
+function personalCheckCommentStatus(){
+	$result = query("SELECT * FROM posts INNER JOIN comments ON posts.post_id=comments.comment_post_id WHERE comment_status='unapproved' AND user_id=".loggedInUserId());
+	return mysqli_num_rows($result);
+}
+
 //===== END USER SPECIFIC HELPERS =====//
 
 //===== LIKES HELPERS =====//

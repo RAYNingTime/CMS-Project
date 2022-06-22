@@ -98,11 +98,11 @@
                <!-- /.row -->
 
                 <?php
-                $published_post_counts = checkStatus('posts', 'post_status' , 'published');
+                $published_post_counts = personalCheckStatus('posts', 'post_status' , 'published');
 
-                $draft_post_counts = checkStatus('posts', 'post_status' , 'draft');
+                $draft_post_counts = personalCheckStatus('posts', 'post_status' , 'draft');
 
-                $unapproved_comment_counts = checkStatus('comments', 'comment_status' , 'unapproved');
+                $unapproved_comment_counts = personalCheckCommentStatus();
                 ?>
 
                 <div class="row">
