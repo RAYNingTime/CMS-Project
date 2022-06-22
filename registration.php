@@ -43,9 +43,6 @@ if(isset($_POST['submit'])) {
 
     <!-- Navigation -->
     
-
-    
- 
     <!-- Page Content -->
 <div class="container">
 <form method="get" class="navbar-form navbar-right" action=""  id="language_form">
