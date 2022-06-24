@@ -17,10 +17,14 @@
                 </h1>
 
 					 <?php
-				if (isset($_POST['submit']))
+				if (isset($_POST['submit']) && !empty($_POST['search'])) {
 					$search = escape($_POST['search']);
 
-					$query = "SELECT * FROM posts WHERE post_tags LIKE '%$search%' ";
+                    if(isset($_SESSION['user_role']) && $_SESSION['user_role'] == 'admin')
+                        $query = "SELECT * FROM posts WHERE post_tags LIKE '%$search%' ";
+                    else 
+                        $query = "SELECT * FROM posts WHERE post_tags LIKE '%$search%' AND post_status = 'published'";
+
 					$search_query = mysqli_query($connect, $query);
 
 					if (!$search_query) {
@@ -29,21 +33,27 @@
 					
 					$count = mysqli_num_rows($search_query);
 					if ($count == 0) {
-						echo "<h1>NO RESULT</h1>";
+                        echo "</br></br><h4 class='text-center'>Currently, there are no posts.</h4>";
+                        echo "<strong><p style='color:grey;' class='text-center'>Return later.</p></strong>";
 					} else {
 					do {
 					$count--;
-               $row = mysqli_fetch_assoc($search_query);
-               
-               $post_id = $row['post_id'];
-               $post_title = $row['post_title'];
-               $post_user = $row['post_user'];
-               $post_date = $row['post_date'];
-               $post_image = $row['post_image'];
-               $post_content = $row['post_content'];
-               $post_status = $row['post_status'];
+                    $row = mysqli_fetch_assoc($search_query);
+                    
+                    $post_id = $row['post_id'];
+                    $post_title = $row['post_title'];
+                    $post_user = $row['post_user'];
+                    $post_date = $row['post_date'];
+                    $post_image = $row['post_image'];
 
-               if ($post_status == 'published') {
+                    if (strlen($row['post_content']) > 150)
+                            $post_content = substr($row['post_content'],0,150) . "..."; 
+                        else 
+                            $post_content = substr($row['post_content'],0,150);
+
+                    $post_status = $row['post_status'];
+
+                    if ($post_status == 'published' || ($_SESSION['user_role'] == 'admin' && $post_status == 'draft') || ($_SESSION['username'] == $post_user)) {
             ?>
 
            
@@ -51,6 +61,7 @@
                 <!-- First Blog Post -->
                 <h2>
                     <a href="post.php?p_id=<?php echo $post_id;?>"><?php echo $post_title;?></a>
+                    <?php if(($_SESSION['username'] == $post_user) && $post_status == 'draft') echo "<small>YOUR DRAFT</small>";?>
                 </h2>
                 <p class="lead">
                     by <a href="index.php"><?php echo $post_user;?></a>
@@ -68,6 +79,9 @@
             <?php
                     }}while ($count != 0);;
 				}
+            } else {
+                header("Location: index.php");
+            }
             ?>
 
             </div>

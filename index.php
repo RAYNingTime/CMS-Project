@@ -59,15 +59,21 @@
                     $post_user = $row['post_user'];
                     $post_date = $row['post_date'];
                     $post_image = $row['post_image'];
-                    $post_content = substr($row['post_content'],0,200);
+                    
+                    if (strlen($row['post_content']) > 150)
+                        $post_content = substr($row['post_content'],0,150) . "..."; 
+                    else 
+                        $post_content = substr($row['post_content'],0,150);
+                        
                     $post_status = $row['post_status'];
 
-                    if($post_status == 'published' || ($_SESSION['user_role'] == 'admin' && $post_status == 'draft')) {
+                    if($post_status == 'published' || ($_SESSION['user_role'] == 'admin' && $post_status == 'draft')  || ($_SESSION['username'] == $post_user)) {
                         $posted = TRUE;
             ?>
                 <!-- First Blog Post -->
                 <h2>
                     <a href="post.php?p_id=<?php echo $post_id;?>"><?php echo $post_title;?></a>
+                    <?php if(($_SESSION['username'] == $post_user) && $post_status == 'draft') echo "<small>YOUR DRAFT</small>";?>
                 </h2>
                 <p class="lead">
                     
