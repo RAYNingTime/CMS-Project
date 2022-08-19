@@ -6,7 +6,6 @@
 if(!ifItIsMethod('get') && !isset($_GET['forgot'])) {
 	redirect('index.php');
 }
-
 if(ifItIsMethod('post')) {
 	if(isset($_POST['email'])){
 
