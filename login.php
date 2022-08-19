@@ -3,6 +3,7 @@
 
 <?php
 
+
 checkIfUserIsLoggedInAndRedirect('/cms/admin');
 
 if(ifItIsMethod('post')){
